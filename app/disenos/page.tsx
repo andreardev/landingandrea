@@ -1,0 +1,150 @@
+import Link from 'next/link'
+import { ArrowRight, Eye, Palette, Home, Sparkles } from 'lucide-react'
+
+const diseños = [
+  {
+    id: 'elotes-1',
+    nombre: 'Clásico Elegante',
+    descripcion: 'Diseño sofisticado y atemporal, perfecto para transmitir calidad y profesionalismo.',
+    caracteristicas: ['Elegante', 'Profesional', 'Clásico'],
+    color: 'from-blue-500 to-indigo-600',
+    imagen: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&q=80',
+    preview: '/disenos/elotes-1',
+  },
+  {
+    id: 'elotes-2',
+    nombre: 'Moderno Minimalista',
+    descripcion: 'Estilo limpio y contemporáneo que prioriza el contenido y la usabilidad.',
+    caracteristicas: ['Minimalista', 'Moderno', 'Limpio'],
+    color: 'from-gray-700 to-gray-900',
+    imagen: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80',
+    preview: '/disenos/elotes-2',
+  },
+  {
+    id: 'elotes-3',
+    nombre: 'Vibrante Colorido',
+    descripcion: 'Diseño lleno de energía y color, ideal para marcas jóvenes y dinámicas.',
+    caracteristicas: ['Vibrante', 'Colorido', 'Energético'],
+    color: 'from-pink-500 to-purple-600',
+    imagen: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80',
+    preview: '/disenos/elotes-3',
+  },
+  {
+    id: 'elotes-4',
+    nombre: 'Premium Lujo',
+    descripcion: 'Estética de alta gama con detalles refinados para marcas exclusivas.',
+    caracteristicas: ['Premium', 'Lujo', 'Exclusivo'],
+    color: 'from-amber-600 to-yellow-700',
+    imagen: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80',
+    preview: '/disenos/elotes-4',
+  },
+]
+
+export default function DiseñosPage() {
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Header - Mobile First */}
+      <section className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-12 sm:py-16 lg:py-20 safe-top">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-6 sm:mb-8 transition-colors touch-target text-sm sm:text-base"
+          >
+            <Home size={18} className="sm:w-5 sm:h-5" />
+            <span>Volver al inicio</span>
+          </Link>
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-4 sm:mb-6">
+              <Palette size={16} className="sm:w-[18px] sm:h-[18px]" />
+              <span className="text-xs sm:text-sm font-medium">Galería de Diseños</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-3 sm:mb-4 px-4">
+              Explora Nuestros Diseños
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-primary-100 max-w-2xl mx-auto px-4">
+              Cada diseño está optimizado para conversión. Elige el estilo que mejor represente tu marca.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Diseños Grid - Mobile First */}
+      <section className="py-8 sm:py-12 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+            {diseños.map((diseño, index) => (
+              <div
+                key={diseño.id}
+                className="group bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 active:scale-[0.98]"
+              >
+                {/* Preview Image */}
+                <div className="relative h-48 sm:h-64 overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${diseño.color} opacity-90 transition-opacity group-hover:opacity-95`}></div>
+                  <img
+                    src={diseño.imagen}
+                    alt={diseño.nombre}
+                    className="w-full h-full object-cover mix-blend-overlay transition-transform group-hover:scale-105"
+                    loading={index < 2 ? "eager" : "lazy"}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white px-4">
+                      <Sparkles size={32} className="mx-auto mb-2 sm:mb-3 opacity-80" />
+                      <h3 className="text-2xl sm:text-3xl font-display font-bold">{diseño.nombre}</h3>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-5 sm:p-6">
+                  <p className="text-sm sm:text-base text-gray-600 mb-4 leading-relaxed">
+                    {diseño.descripcion}
+                  </p>
+                  
+                  {/* Características */}
+                  <div className="flex flex-wrap gap-2 mb-5 sm:mb-6">
+                    {diseño.caracteristicas.map((caracteristica, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-primary-100 text-primary-700 rounded-full text-xs sm:text-sm font-medium"
+                      >
+                        {caracteristica}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <Link
+                    href={diseño.preview}
+                    className="touch-target inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold transition-all w-full group-hover:shadow-lg active:scale-95"
+                  >
+                    <Eye size={18} className="sm:w-5 sm:h-5" />
+                    <span className="text-sm sm:text-base">Ver Diseño Completo</span>
+                    <ArrowRight size={16} className="sm:w-[18px] sm:h-[18px]" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Mobile First */}
+      <section className="py-8 sm:py-12 lg:py-16 bg-white safe-bottom">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-2xl sm:text-3xl font-display font-bold text-gray-900 mb-3 sm:mb-4">
+            ¿No encuentras el diseño perfecto?
+          </h3>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">
+            Podemos crear un diseño personalizado específicamente para tu negocio
+          </p>
+          <a
+            href="#contacto"
+            className="touch-target inline-block bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold transition-all shadow-lg hover:shadow-xl active:scale-95"
+          >
+            Solicitar Diseño Personalizado
+          </a>
+        </div>
+      </section>
+    </main>
+  )
+}
