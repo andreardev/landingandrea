@@ -64,7 +64,7 @@ export default function Contacto() {
               <div className="space-y-4 sm:space-y-6">
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="bg-primary-100 p-2.5 sm:p-3 rounded-lg flex-shrink-0">
-                    <Phone className="text-primary-600" size={20} className="sm:w-6 sm:h-6" />
+                    <Phone className="text-primary-600 sm:w-6 sm:h-6" size={20} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Teléfono</h4>
@@ -76,7 +76,7 @@ export default function Contacto() {
 
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="bg-primary-100 p-2.5 sm:p-3 rounded-lg flex-shrink-0">
-                    <Mail className="text-primary-600" size={20} className="sm:w-6 sm:h-6" />
+                    <Mail className="text-primary-600 sm:w-6 sm:h-6" size={20} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Email</h4>
@@ -88,7 +88,7 @@ export default function Contacto() {
 
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="bg-primary-100 p-2.5 sm:p-3 rounded-lg flex-shrink-0">
-                    <MapPin className="text-primary-600" size={20} className="sm:w-6 sm:h-6" />
+                    <MapPin className="text-primary-600 sm:w-6 sm:h-6" size={20} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Ubicación</h4>

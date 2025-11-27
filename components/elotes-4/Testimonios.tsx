@@ -35,7 +35,7 @@ export default function Testimonios() {
                 ))}
               </div>
               <p className="text-gray-300 mb-6 text-lg leading-relaxed font-light">
-                "{testimonio.texto}"
+                &ldquo;{testimonio.texto}&rdquo;
               </p>
               <div>
                 <h4 className="font-bold text-white text-xl mb-1">{testimonio.nombre}</h4>

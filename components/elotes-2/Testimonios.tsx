@@ -27,7 +27,7 @@ export default function Testimonios() {
           {testimonios.map((testimonio, index) => (
             <div key={index} className="bg-white p-8 border-l-4 border-gray-900">
               <p className="text-gray-700 mb-6 text-lg leading-relaxed">
-                "{testimonio.texto}"
+                &ldquo;{testimonio.texto}&rdquo;
               </p>
               <div>
                 <h4 className="font-bold text-gray-900">{testimonio.nombre}</h4>

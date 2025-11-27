@@ -28,7 +28,7 @@ export default function Testimonios() {
             <div key={index} className="bg-white rounded-3xl p-8 shadow-2xl border-4 border-pink-400">
               <div className="text-4xl mb-4">⭐⭐⭐⭐⭐</div>
               <p className="text-gray-800 mb-6 text-lg font-bold leading-relaxed">
-                "{testimonio.texto}"
+                &ldquo;{testimonio.texto}&rdquo;
               </p>
               <div>
                 <h4 className="font-black text-gray-900 text-xl">{testimonio.nombre}</h4>

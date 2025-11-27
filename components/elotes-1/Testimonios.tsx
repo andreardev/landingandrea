@@ -72,7 +72,7 @@ export default function Testimonios() {
 
               {/* Testimonial Text */}
               <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed relative z-10">
-                "{testimonio.texto}"
+                &ldquo;{testimonio.texto}&rdquo;
               </p>
 
               {/* Author */}
