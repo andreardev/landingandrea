@@ -32,6 +32,46 @@ const features = [
   },
 ]
 
+function FeatureCard({ feature, index }: { feature: typeof features[0]; index: number }) {
+  const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true })
+  const Icon = feature.icon
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50, rotateY: -15 }}
+      animate={inView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+      whileHover={{ 
+        scale: 1.05, 
+        rotateY: 5,
+        z: 50,
+      }}
+      style={{ perspective: 1000 }}
+      className="relative"
+    >
+      <div className="bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl p-8 rounded-2xl border border-gold-500/20 h-full shadow-2xl">
+        <motion.div
+          className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} mb-6`}
+          whileHover={{ rotate: 360 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Icon className="text-white" size={32} />
+        </motion.div>
+        <h3 className="text-2xl font-bold text-white mb-4">{feature.title}</h3>
+        <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+        
+        {/* Glow effect */}
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 rounded-2xl blur-2xl -z-10`}
+          whileHover={{ opacity: 0.3 }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+    </motion.div>
+  )
+}
+
 export default function Innovation() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -66,49 +106,15 @@ export default function Innovation() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {features.map((feature, index) => {
-            const Icon = feature.icon
-            const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true })
-
-            return (
-              <motion.div
-                key={feature.title}
-                ref={ref}
-                initial={{ opacity: 0, y: 50, rotateY: -15 }}
-                animate={inView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  rotateY: 5,
-                  z: 50,
-                }}
-                style={{ perspective: 1000 }}
-                className="relative"
-              >
-                <div className="bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl p-8 rounded-2xl border border-gold-500/20 h-full shadow-2xl">
-                  <motion.div
-                    className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} mb-6`}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <Icon className="text-white" size={32} />
-                  </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-4">{feature.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
-                  
-                  {/* Glow effect */}
-                  <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 rounded-2xl blur-2xl -z-10`}
-                    whileHover={{ opacity: 0.3 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </motion.div>
-            )
-          })}
+          {features.map((feature, index) => (
+            <FeatureCard
+              key={feature.title}
+              feature={feature}
+              index={index}
+            />
+          ))}
         </div>
       </motion.div>
     </section>
   )
 }
-

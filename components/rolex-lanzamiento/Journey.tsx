@@ -32,6 +32,53 @@ const milestones = [
   },
 ]
 
+function MilestoneCard({ milestone, index, isEven }: { milestone: typeof milestones[0]; index: number; isEven: boolean }) {
+  const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true })
+  const Icon = milestone.icon
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: isEven ? -100 : 100 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.2 }}
+      className={`relative flex items-center ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
+    >
+      {/* Content Card */}
+      <div className={`w-full md:w-5/12 ${isEven ? 'md:pr-8' : 'md:pl-8'}`}>
+        <motion.div
+          whileHover={{ scale: 1.05, y: -10 }}
+          className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-xl p-8 rounded-2xl border border-gold-500/20 shadow-2xl"
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <div className="bg-gold-500/20 p-3 rounded-lg">
+              <Icon className="text-gold-500" size={32} />
+            </div>
+            <div>
+              <div className="text-gold-500 text-2xl font-bold">{milestone.year}</div>
+              <h3 className="text-2xl font-bold text-white">{milestone.title}</h3>
+            </div>
+          </div>
+          <p className="text-gray-400 leading-relaxed">{milestone.description}</p>
+        </motion.div>
+      </div>
+
+      {/* Timeline Dot */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={inView ? { scale: 1 } : {}}
+          transition={{ delay: index * 0.2 + 0.3 }}
+          className="w-6 h-6 bg-gold-500 rounded-full border-4 border-black shadow-lg"
+        />
+      </div>
+
+      {/* Spacer */}
+      <div className="w-full md:w-5/12" />
+    </motion.div>
+  )
+}
+
 export default function Journey() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -71,51 +118,14 @@ export default function Journey() {
 
           <div className="space-y-32">
             {milestones.map((milestone, index) => {
-              const Icon = milestone.icon
               const isEven = index % 2 === 0
-              const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true })
-
               return (
-                <motion.div
+                <MilestoneCard
                   key={milestone.year}
-                  ref={ref}
-                  initial={{ opacity: 0, x: isEven ? -100 : 100 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  className={`relative flex items-center ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
-                >
-                  {/* Content Card */}
-                  <div className={`w-full md:w-5/12 ${isEven ? 'md:pr-8' : 'md:pl-8'}`}>
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -10 }}
-                      className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-xl p-8 rounded-2xl border border-gold-500/20 shadow-2xl"
-                    >
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="bg-gold-500/20 p-3 rounded-lg">
-                          <Icon className="text-gold-500" size={32} />
-                        </div>
-                        <div>
-                          <div className="text-gold-500 text-2xl font-bold">{milestone.year}</div>
-                          <h3 className="text-2xl font-bold text-white">{milestone.title}</h3>
-                        </div>
-                      </div>
-                      <p className="text-gray-400 leading-relaxed">{milestone.description}</p>
-                    </motion.div>
-                  </div>
-
-                  {/* Timeline Dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={inView ? { scale: 1 } : {}}
-                      transition={{ delay: index * 0.2 + 0.3 }}
-                      className="w-6 h-6 bg-gold-500 rounded-full border-4 border-black shadow-lg"
-                    />
-                  </div>
-
-                  {/* Spacer */}
-                  <div className="w-full md:w-5/12" />
-                </motion.div>
+                  milestone={milestone}
+                  index={index}
+                  isEven={isEven}
+                />
               )
             })}
           </div>
@@ -124,4 +134,3 @@ export default function Journey() {
     </section>
   )
 }
-
