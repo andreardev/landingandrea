@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Phone, Mail, MapPin, Send, CheckCircle } from 'lucide-react'
+import { handleWhatsAppSubmit } from '@/lib/whatsapp'
 
 export default function Contacto() {
   const [formData, setFormData] = useState({
@@ -17,8 +18,7 @@ export default function Contacto() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Aquí iría la lógica de envío del formulario
-    console.log('Formulario enviado:', formData)
+    handleWhatsAppSubmit(formData)
     setIsSubmitted(true)
     setTimeout(() => {
       setIsSubmitted(false)
@@ -255,7 +255,7 @@ export default function Contacto() {
                     className="w-full bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                   >
                     <Send size={20} />
-                    Enviar Solicitud
+                    Enviar a WhatsApp
                   </button>
                 </form>
               )}

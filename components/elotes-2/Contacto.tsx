@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { handleWhatsAppSubmit } from '@/lib/whatsapp'
 import { Send } from 'lucide-react'
 
 export default function Contacto() {
@@ -13,7 +14,7 @@ export default function Contacto() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Formulario enviado:', formData)
+    handleWhatsAppSubmit(formData)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

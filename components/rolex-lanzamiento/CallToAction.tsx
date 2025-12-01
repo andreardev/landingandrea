@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { X, CheckCircle, Mail, Phone, User } from 'lucide-react'
+import { handleWhatsAppSubmit } from '@/lib/whatsapp'
 
 export default function CallToAction() {
   const [showForm, setShowForm] = useState(false)
@@ -17,6 +18,7 @@ export default function CallToAction() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    handleWhatsAppSubmit(formData)
     setIsSubmitted(true)
     setTimeout(() => {
       setIsSubmitted(false)

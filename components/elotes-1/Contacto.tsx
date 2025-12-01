@@ -17,7 +17,7 @@ export default function Contacto() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Formulario enviado:', formData)
+    handleWhatsAppSubmit(formData)
     setIsSubmitted(true)
     setTimeout(() => {
       setIsSubmitted(false)

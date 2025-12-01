@@ -1,11 +1,31 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Mail, Phone, MapPin, Send, Flower2 } from 'lucide-react'
+import { handleWhatsAppSubmit } from '@/lib/whatsapp'
 
 export default function Contacto() {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    evento: '',
+    mensaje: '',
+  })
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    handleWhatsAppSubmit(formData)
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
 
   return (
     <section
@@ -93,7 +113,7 @@ export default function Contacto() {
             className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-green-50"
           >
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Solicita una Cotización</h3>
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-2">
                   Nombre
@@ -102,6 +122,8 @@ export default function Contacto() {
                   type="text"
                   id="nombre"
                   name="nombre"
+                  value={formData.nombre}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                   placeholder="Tu nombre"
                 />
@@ -114,6 +136,8 @@ export default function Contacto() {
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                   placeholder="tu@email.com"
                 />
@@ -125,13 +149,16 @@ export default function Contacto() {
                 <select
                   id="evento"
                   name="evento"
+                  value={formData.evento}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                 >
-                  <option>Boda</option>
-                  <option>Quinceañera</option>
-                  <option>Evento Corporativo</option>
-                  <option>Celebración</option>
-                  <option>Otro</option>
+                  <option value="">Selecciona un evento</option>
+                  <option value="Boda">Boda</option>
+                  <option value="Quinceañera">Quinceañera</option>
+                  <option value="Evento Corporativo">Evento Corporativo</option>
+                  <option value="Celebración">Celebración</option>
+                  <option value="Otro">Otro</option>
                 </select>
               </div>
               <div>
@@ -142,6 +169,8 @@ export default function Contacto() {
                   id="mensaje"
                   name="mensaje"
                   rows={4}
+                  value={formData.mensaje}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
                   placeholder="Cuéntanos sobre tu evento..."
                 />
@@ -153,7 +182,7 @@ export default function Contacto() {
                 className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center gap-2"
               >
                 <Send className="w-5 h-5" />
-                Enviar Solicitud
+                Enviar a WhatsApp
               </motion.button>
             </form>
           </motion.div>

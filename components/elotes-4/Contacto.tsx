@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { handleWhatsAppSubmit } from '@/lib/whatsapp'
 
 export default function Contacto() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ export default function Contacto() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Formulario enviado:', formData)
+    handleWhatsAppSubmit(formData)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -92,7 +93,7 @@ export default function Contacto() {
             type="submit"
             className="w-full mt-8 bg-yellow-500 text-black px-8 py-5 font-bold hover:bg-yellow-400 transition-all tracking-wider uppercase shadow-lg shadow-yellow-500/50"
           >
-            Enviar Solicitud
+            Enviar a WhatsApp
           </button>
         </form>
       </div>
