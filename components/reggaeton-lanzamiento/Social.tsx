@@ -2,11 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Instagram, Spotify, Youtube, Twitter, Music2 } from 'lucide-react'
+import { Instagram, Headphones, Youtube, Twitter, Music2 } from 'lucide-react'
 
 const socialLinks = [
   { icon: Instagram, label: 'Instagram', color: 'from-pink-500 to-purple-500', href: '#' },
-  { icon: Spotify, label: 'Spotify', color: 'from-green-400 to-green-600', href: '#' },
+  { icon: Headphones, label: 'Spotify', color: 'from-green-400 to-green-600', href: '#' },
   { icon: Youtube, label: 'YouTube', color: 'from-red-500 to-red-700', href: '#' },
   { icon: Twitter, label: 'Twitter', color: 'from-blue-400 to-blue-600', href: '#' },
 ]

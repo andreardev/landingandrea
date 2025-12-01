@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Music, Instagram, Spotify, Youtube } from 'lucide-react'
+import { Menu, X, Music, Instagram, Headphones, Youtube } from 'lucide-react'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -83,7 +83,7 @@ export default function Navbar() {
                 whileTap={{ scale: 0.9 }}
                 className="text-white/80 hover:text-green-400 transition-colors"
               >
-                <Spotify size={20} />
+                <Headphones size={20} />
               </motion.a>
               <motion.a
                 href="#"
@@ -133,7 +133,7 @@ export default function Navbar() {
                   <Instagram size={24} />
                 </a>
                 <a href="#" className="text-white/80 hover:text-green-400">
-                  <Spotify size={24} />
+                  <Headphones size={24} />
                 </a>
                 <a href="#" className="text-white/80 hover:text-red-500">
                   <Youtube size={24} />
