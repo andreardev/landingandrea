@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Phone, Mail, MapPin, Send, CheckCircle } from 'lucide-react'
+import { handleWhatsAppSubmit } from '@/lib/whatsapp'
 
 export default function Contacto() {
   const [formData, setFormData] = useState({
