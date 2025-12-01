@@ -13,6 +13,7 @@ export default function RelojArenaAmorPage() {
   })
   const [arenaFluyendo, setArenaFluyendo] = useState(true)
   const [mostrandoFormulario, setMostrandoFormulario] = useState(true)
+  const [tiempoInicial, setTiempoInicial] = useState<number>(0)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationFrameRef = useRef<number>()
 
@@ -81,6 +82,23 @@ export default function RelojArenaAmorPage() {
     }
   }
 
+  const calcularPorcentajeArena = (): number => {
+    if (!fechaEvento || mostrandoFormulario || tiempoInicial === 0) return 0
+
+    const ahora = new Date().getTime()
+    const evento = new Date(fechaEvento).getTime()
+    const diferencia = evento - ahora
+
+    if (diferencia <= 0) return 1
+
+    // Calcular porcentaje basado en el tiempo transcurrido desde el inicio
+    const tiempoTranscurrido = tiempoInicial - diferencia
+    const porcentaje = tiempoTranscurrido / tiempoInicial
+
+    // Retornar porcentaje entre 0 y 1
+    return Math.max(0, Math.min(1, porcentaje))
+  }
+
   const iniciarParticulas = () => {
     if (!canvasRef.current) return
     const canvas = canvasRef.current
@@ -142,8 +160,15 @@ export default function RelojArenaAmorPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (fechaEvento) {
-      setMostrandoFormulario(false)
-      calcularTiempoRestante()
+      const ahora = new Date().getTime()
+      const evento = new Date(fechaEvento).getTime()
+      const diferencia = evento - ahora
+      
+      if (diferencia > 0) {
+        setTiempoInicial(diferencia)
+        setMostrandoFormulario(false)
+        calcularTiempoRestante()
+      }
     }
   }
 
@@ -204,60 +229,113 @@ export default function RelojArenaAmorPage() {
           </p>
         </div>
 
-        {/* Reloj de Arena */}
-        <div className="relative mb-8 sm:mb-12 w-full max-w-md">
+        {/* Reloj de Arena Mejorado */}
+        <div className="relative mb-8 sm:mb-12 w-full max-w-lg">
           <div className="relative">
-            {/* Estructura del reloj de arena */}
-            <div className="relative bg-gradient-to-br from-amber-100 to-amber-200 rounded-3xl p-8 sm:p-12 shadow-2xl border-4 border-amber-300">
-              {/* Parte superior del reloj */}
-              <div className="relative mx-auto w-32 h-32 sm:w-40 sm:h-40">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-600 to-amber-800 rounded-t-full border-4 border-amber-700 shadow-inner">
-                  {/* Arena en la parte superior */}
-                  <div 
-                    className={`absolute bottom-0 left-0 right-0 bg-gradient-to-b from-amber-500 to-amber-700 rounded-b-full transition-all duration-1000 ${
-                      arenaFluyendo ? 'h-full' : 'h-0'
-                    }`}
-                    style={{
-                      transition: arenaFluyendo ? `height ${tiempoRestante.dias * 24 * 60 * 60 + tiempoRestante.horas * 60 * 60 + tiempoRestante.minutos * 60 + tiempoRestante.segundos}s linear` : 'height 0s'
-                    }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Cuello del reloj */}
-              <div className="relative mx-auto w-4 h-8 sm:h-12 bg-gradient-to-b from-amber-700 to-amber-600 rounded-full">
-                {/* Arena fluyendo */}
-                {arenaFluyendo && (
-                  <div className="absolute inset-0 overflow-hidden">
-                    {[...Array(3)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-2 h-2 bg-amber-500 rounded-full animate-arena-fall"
-                        style={{
-                          left: '50%',
-                          animationDelay: `${i * 0.3}s`,
-                          animationDuration: '2s'
-                        }}
-                      />
-                    ))}
+            {/* Contenedor principal con efecto 3D */}
+            <div className="relative" style={{ perspective: '1000px' }}>
+              <div className="relative transform-gpu" style={{ transformStyle: 'preserve-3d' }}>
+                {/* Estructura del reloj de arena - Diseño Premium */}
+                <div className="relative bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 rounded-[3rem] p-10 sm:p-16 shadow-[0_20px_60px_rgba(217,119,6,0.3)] border-4 border-amber-200">
+                  {/* Reflejo de luz superior */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-white/40 rounded-full blur-sm"></div>
+                  
+                  {/* Parte superior del reloj - Más elegante */}
+                  <div className="relative mx-auto w-40 h-40 sm:w-48 sm:h-48 mb-2">
+                    {/* Contenedor superior con sombra 3D */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 rounded-t-[2rem] shadow-[inset_0_-10px_30px_rgba(0,0,0,0.3),0_10px_20px_rgba(0,0,0,0.2)] border-4 border-amber-800/50">
+                      {/* Reflejo interno superior */}
+                      <div className="absolute top-2 left-1/4 w-1/2 h-8 bg-white/20 rounded-full blur-sm"></div>
+                      
+                      {/* Arena en la parte superior - Cálculo dinámico */}
+                      {mostrandoFormulario ? (
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 rounded-b-[2rem] h-full"></div>
+                      ) : (
+                        <div 
+                          className="absolute bottom-0 left-0 right-0 bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 rounded-b-[2rem] transition-all duration-1000 ease-linear"
+                          style={{
+                            height: arenaFluyendo 
+                              ? `${Math.max(0, Math.min(100, (1 - calcularPorcentajeArena()) * 100))}%`
+                              : '0%'
+                          }}
+                        >
+                          {/* Textura de arena */}
+                          <div className="absolute inset-0 opacity-30" style={{
+                            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)',
+                            backgroundSize: '8px 8px'
+                          }}></div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                )}
-              </div>
 
-              {/* Parte inferior del reloj */}
-              <div className="relative mx-auto w-32 h-32 sm:w-40 sm:h-40">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-600 to-amber-800 rounded-b-full border-4 border-amber-700 shadow-inner">
-                  {/* Arena acumulada en la parte inferior */}
-                  <div 
-                    className={`absolute top-0 left-0 right-0 bg-gradient-to-t from-amber-500 to-amber-700 rounded-t-full transition-all duration-1000 ${
-                      arenaFluyendo ? 'h-0' : 'h-full'
-                    }`}
-                  ></div>
+                  {/* Cuello del reloj - Más delgado y elegante */}
+                  <div className="relative mx-auto w-3 h-10 sm:w-4 sm:h-14 mb-2">
+                    {/* Cuello con efecto de vidrio */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-amber-800 via-amber-700 to-amber-600 rounded-full shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]">
+                      {/* Reflejo de luz en el cuello */}
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white/60 rounded-full blur-sm"></div>
+                    </div>
+                    
+                    {/* Arena fluyendo - Muchas más partículas */}
+                    {arenaFluyendo && !mostrandoFormulario && (
+                      <div className="absolute inset-0 overflow-visible pointer-events-none">
+                        {[...Array(12)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-b from-amber-400 to-amber-600 rounded-full animate-arena-fall shadow-sm"
+                            style={{
+                              left: `${50 + (Math.random() - 0.5) * 20}%`,
+                              top: '-10px',
+                              animationDelay: `${i * 0.15}s`,
+                              animationDuration: `${1.5 + Math.random() * 0.5}s`,
+                              opacity: 0.8 + Math.random() * 0.2
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Parte inferior del reloj - Más elegante */}
+                  <div className="relative mx-auto w-40 h-40 sm:w-48 sm:h-48">
+                    {/* Contenedor inferior con sombra 3D */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 rounded-b-[2rem] shadow-[inset_0_10px_30px_rgba(0,0,0,0.3),0_-10px_20px_rgba(0,0,0,0.2)] border-4 border-amber-800/50">
+                      {/* Reflejo interno inferior */}
+                      <div className="absolute bottom-2 left-1/4 w-1/2 h-8 bg-white/20 rounded-full blur-sm"></div>
+                      
+                      {/* Arena acumulada en la parte inferior - Cálculo dinámico */}
+                      {mostrandoFormulario ? (
+                        <div className="absolute top-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-600 to-amber-700 rounded-t-[2rem] h-0"></div>
+                      ) : (
+                        <div 
+                          className="absolute top-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-600 to-amber-700 rounded-t-[2rem] transition-all duration-1000 ease-linear"
+                          style={{
+                            height: arenaFluyendo 
+                              ? `${Math.max(0, Math.min(100, calcularPorcentajeArena() * 100))}%`
+                              : '100%'
+                          }}
+                        >
+                          {/* Textura de arena acumulada */}
+                          <div className="absolute inset-0 opacity-30" style={{
+                            backgroundImage: 'radial-gradient(circle at 80% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)',
+                            backgroundSize: '8px 8px'
+                          }}></div>
+                          
+                          {/* Efecto de montículo de arena */}
+                          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-amber-400/50 rounded-full blur-sm"></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Base del reloj - Más elegante */}
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-56 h-10 sm:w-64 sm:h-12 bg-gradient-to-br from-amber-800 via-amber-900 to-amber-950 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.4)] border-2 border-amber-700/50">
+                    {/* Reflejo en la base */}
+                    <div className="absolute top-1 left-1/4 w-1/2 h-1 bg-white/20 rounded-full blur-sm"></div>
+                  </div>
                 </div>
               </div>
-
-              {/* Base del reloj */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-48 h-8 bg-gradient-to-br from-amber-700 to-amber-900 rounded-full shadow-xl"></div>
             </div>
 
             {/* Contador de tiempo */}

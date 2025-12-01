@@ -240,6 +240,20 @@
   animation: arena-fall 2s linear infinite;
 }
 
+@keyframes arena-fall {
+  0% {
+    transform: translateY(0) translateX(-50%);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(150px) translateX(-50%);
+    opacity: 0;
+  }
+}
+
 /* Gradientes personalizados */
 .gradient-primary {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
