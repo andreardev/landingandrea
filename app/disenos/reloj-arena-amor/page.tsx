@@ -229,112 +229,122 @@ export default function RelojArenaAmorPage() {
           </p>
         </div>
 
-        {/* Reloj de Arena Mejorado */}
-        <div className="relative mb-8 sm:mb-12 w-full max-w-lg">
+        {/* Reloj de Arena Realista */}
+        <div className="relative mb-8 sm:mb-12 w-full max-w-md flex justify-center">
           <div className="relative">
-            {/* Contenedor principal con efecto 3D */}
-            <div className="relative" style={{ perspective: '1000px' }}>
-              <div className="relative transform-gpu" style={{ transformStyle: 'preserve-3d' }}>
-                {/* Estructura del reloj de arena - Diseño Premium */}
-                <div className="relative bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 rounded-[3rem] p-10 sm:p-16 shadow-[0_20px_60px_rgba(217,119,6,0.3)] border-4 border-amber-200">
-                  {/* Reflejo de luz superior */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-white/40 rounded-full blur-sm"></div>
+            {/* Estructura del reloj de arena - Forma clásica */}
+            <div className="relative">
+              {/* Parte superior - Bulbo superior */}
+              <div className="relative mx-auto w-48 h-48 sm:w-56 sm:h-56">
+                {/* Contenedor de vidrio superior */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-100/20 via-amber-50/30 to-amber-100/20 rounded-t-full border-4 border-amber-300/50 shadow-[inset_0_0_20px_rgba(217,119,6,0.2)] backdrop-blur-sm">
+                  {/* Reflejo de vidrio */}
+                  <div className="absolute top-4 left-1/4 w-1/2 h-12 bg-white/30 rounded-full blur-md"></div>
                   
-                  {/* Parte superior del reloj - Más elegante */}
-                  <div className="relative mx-auto w-40 h-40 sm:w-48 sm:h-48 mb-2">
-                    {/* Contenedor superior con sombra 3D */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 rounded-t-[2rem] shadow-[inset_0_-10px_30px_rgba(0,0,0,0.3),0_10px_20px_rgba(0,0,0,0.2)] border-4 border-amber-800/50">
-                      {/* Reflejo interno superior */}
-                      <div className="absolute top-2 left-1/4 w-1/2 h-8 bg-white/20 rounded-full blur-sm"></div>
-                      
-                      {/* Arena en la parte superior - Cálculo dinámico */}
-                      {mostrandoFormulario ? (
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 rounded-b-[2rem] h-full"></div>
-                      ) : (
-                        <div 
-                          className="absolute bottom-0 left-0 right-0 bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 rounded-b-[2rem] transition-all duration-1000 ease-linear"
-                          style={{
-                            height: arenaFluyendo 
-                              ? `${Math.max(0, Math.min(100, (1 - calcularPorcentajeArena()) * 100))}%`
-                              : '0%'
-                          }}
-                        >
-                          {/* Textura de arena */}
-                          <div className="absolute inset-0 opacity-30" style={{
-                            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)',
-                            backgroundSize: '8px 8px'
-                          }}></div>
-                        </div>
-                      )}
+                  {/* Arena en la parte superior */}
+                  {mostrandoFormulario ? (
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 rounded-b-full h-full">
+                      {/* Textura de granos de arena */}
+                      <div className="absolute inset-0" style={{
+                        backgroundImage: `
+                          radial-gradient(circle at 30% 40%, rgba(255,255,255,0.4) 1px, transparent 1px),
+                          radial-gradient(circle at 70% 60%, rgba(255,255,255,0.3) 1px, transparent 1px),
+                          radial-gradient(circle at 50% 80%, rgba(255,255,255,0.35) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '12px 12px, 10px 10px, 14px 14px'
+                      }}></div>
                     </div>
-                  </div>
-
-                  {/* Cuello del reloj - Más delgado y elegante */}
-                  <div className="relative mx-auto w-3 h-10 sm:w-4 sm:h-14 mb-2">
-                    {/* Cuello con efecto de vidrio */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-amber-800 via-amber-700 to-amber-600 rounded-full shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]">
-                      {/* Reflejo de luz en el cuello */}
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white/60 rounded-full blur-sm"></div>
+                  ) : (
+                    <div 
+                      className="absolute bottom-0 left-0 right-0 bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 rounded-b-full transition-all duration-[2000ms] ease-linear"
+                      style={{
+                        height: arenaFluyendo 
+                          ? `${Math.max(0, Math.min(100, (1 - calcularPorcentajeArena()) * 100))}%`
+                          : '0%'
+                      }}
+                    >
+                      {/* Textura de granos de arena visible */}
+                      <div className="absolute inset-0" style={{
+                        backgroundImage: `
+                          radial-gradient(circle at 30% 40%, rgba(255,255,255,0.4) 2px, transparent 2px),
+                          radial-gradient(circle at 70% 60%, rgba(255,255,255,0.3) 1.5px, transparent 1.5px),
+                          radial-gradient(circle at 50% 80%, rgba(255,255,255,0.35) 2px, transparent 2px)
+                        `,
+                        backgroundSize: '12px 12px, 10px 10px, 14px 14px'
+                      }}></div>
                     </div>
-                    
-                    {/* Arena fluyendo - Muchas más partículas */}
-                    {arenaFluyendo && !mostrandoFormulario && (
-                      <div className="absolute inset-0 overflow-visible pointer-events-none">
-                        {[...Array(12)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-b from-amber-400 to-amber-600 rounded-full animate-arena-fall shadow-sm"
-                            style={{
-                              left: `${50 + (Math.random() - 0.5) * 20}%`,
-                              top: '-10px',
-                              animationDelay: `${i * 0.15}s`,
-                              animationDuration: `${1.5 + Math.random() * 0.5}s`,
-                              opacity: 0.8 + Math.random() * 0.2
-                            }}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Parte inferior del reloj - Más elegante */}
-                  <div className="relative mx-auto w-40 h-40 sm:w-48 sm:h-48">
-                    {/* Contenedor inferior con sombra 3D */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 rounded-b-[2rem] shadow-[inset_0_10px_30px_rgba(0,0,0,0.3),0_-10px_20px_rgba(0,0,0,0.2)] border-4 border-amber-800/50">
-                      {/* Reflejo interno inferior */}
-                      <div className="absolute bottom-2 left-1/4 w-1/2 h-8 bg-white/20 rounded-full blur-sm"></div>
-                      
-                      {/* Arena acumulada en la parte inferior - Cálculo dinámico */}
-                      {mostrandoFormulario ? (
-                        <div className="absolute top-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-600 to-amber-700 rounded-t-[2rem] h-0"></div>
-                      ) : (
-                        <div 
-                          className="absolute top-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-600 to-amber-700 rounded-t-[2rem] transition-all duration-1000 ease-linear"
-                          style={{
-                            height: arenaFluyendo 
-                              ? `${Math.max(0, Math.min(100, calcularPorcentajeArena() * 100))}%`
-                              : '100%'
-                          }}
-                        >
-                          {/* Textura de arena acumulada */}
-                          <div className="absolute inset-0 opacity-30" style={{
-                            backgroundImage: 'radial-gradient(circle at 80% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)',
-                            backgroundSize: '8px 8px'
-                          }}></div>
-                          
-                          {/* Efecto de montículo de arena */}
-                          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-amber-400/50 rounded-full blur-sm"></div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Base del reloj - Más elegante */}
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-56 h-10 sm:w-64 sm:h-12 bg-gradient-to-br from-amber-800 via-amber-900 to-amber-950 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.4)] border-2 border-amber-700/50">
-                    {/* Reflejo en la base */}
-                    <div className="absolute top-1 left-1/4 w-1/2 h-1 bg-white/20 rounded-full blur-sm"></div>
-                  </div>
+                  )}
                 </div>
+              </div>
+
+              {/* Cuello del reloj - Estrecho y visible */}
+              <div className="relative mx-auto w-6 h-8 sm:w-8 sm:h-10 -mt-1 -mb-1 z-10">
+                {/* Tubo de conexión */}
+                <div className="absolute inset-0 bg-gradient-to-b from-amber-800 via-amber-700 to-amber-800 rounded-full shadow-[inset_0_0_15px_rgba(0,0,0,0.6)]">
+                  {/* Reflejo de luz en el centro */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white/40 rounded-full blur-sm"></div>
+                </div>
+                
+                {/* Granos de arena cayendo - MUY VISIBLES */}
+                {arenaFluyendo && !mostrandoFormulario && (
+                  <div className="absolute inset-0 overflow-visible pointer-events-none z-20">
+                    {[...Array(20)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-2 h-2 sm:w-2.5 sm:h-2.5 bg-amber-500 rounded-full animate-arena-fall shadow-md border border-amber-600"
+                        style={{
+                          left: `${45 + Math.random() * 10}%`,
+                          top: '-5px',
+                          animationDelay: `${i * 0.1}s`,
+                          animationDuration: `${1.2 + Math.random() * 0.4}s`,
+                          opacity: 0.9 + Math.random() * 0.1,
+                          transform: `scale(${0.8 + Math.random() * 0.4})`
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Parte inferior - Bulbo inferior */}
+              <div className="relative mx-auto w-48 h-48 sm:w-56 sm:h-56">
+                {/* Contenedor de vidrio inferior */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-100/20 via-amber-50/30 to-amber-100/20 rounded-b-full border-4 border-amber-300/50 shadow-[inset_0_0_20px_rgba(217,119,6,0.2)] backdrop-blur-sm">
+                  {/* Reflejo de vidrio */}
+                  <div className="absolute bottom-4 left-1/4 w-1/2 h-12 bg-white/30 rounded-full blur-md"></div>
+                  
+                  {/* Arena acumulada en la parte inferior */}
+                  {mostrandoFormulario ? (
+                    <div className="absolute top-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-600 to-amber-700 rounded-t-full h-0"></div>
+                  ) : (
+                    <div 
+                      className="absolute top-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-600 to-amber-700 rounded-t-full transition-all duration-[2000ms] ease-linear"
+                      style={{
+                        height: arenaFluyendo 
+                          ? `${Math.max(0, Math.min(100, calcularPorcentajeArena() * 100))}%`
+                          : '100%'
+                      }}
+                    >
+                      {/* Textura de granos de arena visible */}
+                      <div className="absolute inset-0" style={{
+                        backgroundImage: `
+                          radial-gradient(circle at 30% 60%, rgba(255,255,255,0.4) 2px, transparent 2px),
+                          radial-gradient(circle at 70% 40%, rgba(255,255,255,0.3) 1.5px, transparent 1.5px),
+                          radial-gradient(circle at 50% 20%, rgba(255,255,255,0.35) 2px, transparent 2px)
+                        `,
+                        backgroundSize: '12px 12px, 10px 10px, 14px 14px'
+                      }}></div>
+                      
+                      {/* Montículo de arena en la parte superior */}
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-3 bg-amber-400/60 rounded-full blur-sm"></div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Base decorativa */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-52 h-6 sm:w-60 sm:h-8 bg-gradient-to-br from-amber-700 via-amber-800 to-amber-900 rounded-full shadow-[0_8px_25px_rgba(0,0,0,0.3)] border-2 border-amber-600/50">
+                <div className="absolute top-1 left-1/4 w-1/2 h-1 bg-white/20 rounded-full blur-sm"></div>
               </div>
             </div>
 
