@@ -92,6 +92,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80',
     preview: '/disenos/maquillaje-peinado',
   },
+  {
+    id: 'fotografo-eventos',
+    nombre: 'Fotógrafo de Eventos',
+    descripcion: 'Landing page moderna y espectacular para fotógrafo de eventos sociales con galería interactiva, portafolio visual, servicios y proceso de trabajo.',
+    caracteristicas: ['Moderno', 'Visual', 'Interactivo', 'Espectacular'],
+    color: 'from-purple-500 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
+    preview: '/disenos/fotografo-eventos',
+  },
 ]
 
 export default function DiseñosPage() {
