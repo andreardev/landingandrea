@@ -19,8 +19,11 @@ export default function EspejoMagicoPage() {
   const [espejoRoto, setEspejoRoto] = useState(false)
   const [recomendaciones, setRecomendaciones] = useState<Prenda[]>([])
   const [mostrandoRecomendaciones, setMostrandoRecomendaciones] = useState(false)
+  const [camaraActiva, setCamaraActiva] = useState(false)
+  const [errorCamara, setErrorCamara] = useState<string | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const streamRef = useRef<MediaStream | null>(null)
 
   const estilos = [
     { nombre: 'Clásico Elegante', color: 'from-blue-600 to-indigo-700', icon: '👔' },
@@ -82,54 +85,113 @@ export default function EspejoMagicoPage() {
     },
   ]
 
-  const iniciarAnalisis = () => {
-    setAnalizando(true)
-    setEspejoRoto(false)
-    setMostrandoRecomendaciones(false)
-    setRecomendaciones([])
+  const iniciarCamara = async () => {
+    try {
+      setErrorCamara(null)
+      setAnalizando(true)
+      setEspejoRoto(false)
+      setMostrandoRecomendaciones(false)
+      setRecomendaciones([])
 
-    // Simular análisis de estilo
-    setTimeout(() => {
-      const estiloAleatorio = estilos[Math.floor(Math.random() * estilos.length)]
-      setEstiloDetectado(estiloAleatorio.nombre)
-      
-      // Filtrar prendas según estilo detectado
-      const prendasFiltradas = prendas.filter(p => 
-        p.estilo.includes(estiloAleatorio.nombre)
-      )
-      setRecomendaciones(prendasFiltradas.length > 0 ? prendasFiltradas : prendas.slice(0, 3))
-      
+      // Solicitar acceso a la cámara
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'user', // Cámara frontal
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      })
+
+      streamRef.current = stream
+      setCamaraActiva(true)
+
+      // Mostrar el video en el elemento video
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+        videoRef.current.play()
+      }
+
+      // Simular análisis de estilo mientras se muestra el video
+      setTimeout(() => {
+        const estiloAleatorio = estilos[Math.floor(Math.random() * estilos.length)]
+        setEstiloDetectado(estiloAleatorio.nombre)
+        
+        // Filtrar prendas según estilo detectado
+        const prendasFiltradas = prendas.filter(p => 
+          p.estilo.includes(estiloAleatorio.nombre)
+        )
+        setRecomendaciones(prendasFiltradas.length > 0 ? prendasFiltradas : prendas.slice(0, 3))
+        
+        // Detener la cámara
+        detenerCamara()
+        setAnalizando(false)
+        
+        // Efecto de espejo roto
+        setTimeout(() => {
+          setEspejoRoto(true)
+          setTimeout(() => {
+            setMostrandoRecomendaciones(true)
+          }, 800)
+        }, 500)
+      }, 3000)
+
+    } catch (error: any) {
+      console.error('Error al acceder a la cámara:', error)
+      setErrorCamara('No se pudo acceder a la cámara. Por favor, permite el acceso a la cámara en tu navegador.')
       setAnalizando(false)
       
-      // Efecto de espejo roto
+      // Si falla la cámara, continuar con el análisis simulado
       setTimeout(() => {
+        const estiloAleatorio = estilos[Math.floor(Math.random() * estilos.length)]
+        setEstiloDetectado(estiloAleatorio.nombre)
+        
+        const prendasFiltradas = prendas.filter(p => 
+          p.estilo.includes(estiloAleatorio.nombre)
+        )
+        setRecomendaciones(prendasFiltradas.length > 0 ? prendasFiltradas : prendas.slice(0, 3))
+        
         setEspejoRoto(true)
         setTimeout(() => {
           setMostrandoRecomendaciones(true)
         }, 800)
-      }, 500)
-    }, 3000)
+      }, 2000)
+    }
   }
 
-  useEffect(() => {
-    // Simular acceso a cámara (solo visual, sin acceso real)
+  const detenerCamara = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current = null
+    }
     if (videoRef.current) {
-      // Crear un canvas con efecto de espejo
-      const canvas = canvasRef.current
-      if (canvas) {
-        const ctx = canvas.getContext('2d')
-        if (ctx) {
-          // Dibujar efecto de espejo con gradiente
-          const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-          gradient.addColorStop(0, 'rgba(200, 200, 255, 0.3)')
-          gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)')
-          gradient.addColorStop(1, 'rgba(200, 200, 255, 0.3)')
-          ctx.fillStyle = gradient
-          ctx.fillRect(0, 0, canvas.width, canvas.height)
-        }
-      }
+      videoRef.current.srcObject = null
+    }
+    setCamaraActiva(false)
+  }
+
+  // Limpiar la cámara al desmontar el componente
+  useEffect(() => {
+    return () => {
+      detenerCamara()
     }
   }, [])
+
+  // Inicializar canvas cuando no hay cámara activa
+  useEffect(() => {
+    if (!camaraActiva && canvasRef.current) {
+      const canvas = canvasRef.current
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        // Dibujar efecto de espejo con gradiente
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+        gradient.addColorStop(0, 'rgba(200, 200, 255, 0.3)')
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)')
+        gradient.addColorStop(1, 'rgba(200, 200, 255, 0.3)')
+        ctx.fillStyle = gradient
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+      }
+    }
+  }, [camaraActiva])
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
@@ -165,23 +227,52 @@ export default function EspejoMagicoPage() {
                 {/* Espejo con efecto de vidrio */}
                 <div className="relative bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 rounded-xl overflow-hidden shadow-inner">
                   {/* Efecto de reflejo */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent z-10"></div>
                   
-                  {/* Canvas para efecto de espejo */}
-                  <canvas
-                    ref={canvasRef}
-                    width={800}
-                    height={600}
-                    className="w-full h-64 sm:h-80 md:h-96 object-cover opacity-80"
-                  />
+                  {/* Video de la cámara o canvas de respaldo */}
+                  {camaraActiva ? (
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      className="w-full h-64 sm:h-80 md:h-96 object-cover scale-x-[-1]"
+                      style={{ transform: 'scaleX(-1)' }}
+                    />
+                  ) : (
+                    <canvas
+                      ref={canvasRef}
+                      width={800}
+                      height={600}
+                      className="w-full h-64 sm:h-80 md:h-96 object-cover opacity-80"
+                    />
+                  )}
 
                   {/* Overlay de análisis */}
                   {analizando && (
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-sm">
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center backdrop-blur-sm z-20">
                       <div className="text-center">
                         <div className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
                         <p className="text-white text-lg sm:text-xl font-semibold">Analizando tu estilo...</p>
-                        <p className="text-white/70 text-sm sm:text-base mt-2">Detectando preferencias de moda</p>
+                        <p className="text-white/70 text-sm sm:text-base mt-2">
+                          {camaraActiva ? 'Escaneando tu look...' : 'Detectando preferencias de moda'}
+                        </p>
+                        {camaraActiva && (
+                          <div className="mt-4 flex items-center justify-center gap-2">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span className="text-green-400 text-xs">Cámara activa</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Mensaje de error de cámara */}
+                  {errorCamara && (
+                    <div className="absolute inset-0 bg-red-900/50 flex items-center justify-center backdrop-blur-sm z-20">
+                      <div className="text-center p-4 bg-red-800/90 rounded-xl mx-4">
+                        <p className="text-white text-sm sm:text-base mb-2">⚠️ {errorCamara}</p>
+                        <p className="text-white/80 text-xs">Continuando con análisis simulado...</p>
                       </div>
                     </div>
                   )}
@@ -213,11 +304,11 @@ export default function EspejoMagicoPage() {
             {/* Botón de análisis */}
             {!analizando && !mostrandoRecomendaciones && (
               <button
-                onClick={iniciarAnalisis}
+                onClick={iniciarCamara}
                 className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-8 py-4 sm:px-12 sm:py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg sm:text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-purple-500/50 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 animate-fade-in-up"
               >
                 <Camera size={24} />
-                <span>Analizar Mi Estilo</span>
+                <span>Activar Cámara y Analizar</span>
               </button>
             )}
           </div>
@@ -283,10 +374,24 @@ export default function EspejoMagicoPage() {
             <div className="text-center mt-8">
               <button
                 onClick={() => {
+                  detenerCamara()
                   setMostrandoRecomendaciones(false)
                   setEspejoRoto(false)
                   setEstiloDetectado(null)
                   setRecomendaciones([])
+                  setErrorCamara(null)
+                  // Reiniciar canvas
+                  if (canvasRef.current) {
+                    const ctx = canvasRef.current.getContext('2d')
+                    if (ctx) {
+                      const gradient = ctx.createLinearGradient(0, 0, canvasRef.current.width, canvasRef.current.height)
+                      gradient.addColorStop(0, 'rgba(200, 200, 255, 0.3)')
+                      gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)')
+                      gradient.addColorStop(1, 'rgba(200, 200, 255, 0.3)')
+                      ctx.fillStyle = gradient
+                      ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+                    }
+                  }
                 }}
                 className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-xl transition-all flex items-center gap-2 mx-auto"
               >
