@@ -146,6 +146,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
     preview: '/disenos/jardin-serenidad',
   },
+  {
+    id: 'matriz-codigo',
+    nombre: 'La Matriz del Código',
+    descripcion: 'Landing page disruptiva para tecnología/software con lluvia de código tipo Matrix, terminal interactiva donde el usuario puede "hackear" para revelar información y efectos de terminal realistas.',
+    caracteristicas: ['Interactivo', 'Matrix', 'Terminal', 'Gamificado'],
+    color: 'from-green-500 to-emerald-600',
+    imagen: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+    preview: '/disenos/matriz-codigo',
+  },
 ]
 
 export default function DiseñosPage() {
