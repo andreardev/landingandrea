@@ -47,6 +47,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
     preview: '/disenos/rolex-lanzamiento',
   },
+  {
+    id: 'reggaeton-lanzamiento',
+    nombre: 'Reggaeton Lanzamiento',
+    descripcion: 'Landing page vibrante y energética para el lanzamiento de un disco de reggaeton con animaciones musicales, tracklist interactivo y merchandising.',
+    caracteristicas: ['Vibrante', 'Musical', 'Animado', 'Moderno'],
+    color: 'from-purple-500 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80',
+    preview: '/disenos/reggaeton-lanzamiento',
+  },
 ]
 
 export default function DiseñosPage() {
