@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Play, Music2, Sparkles } from 'lucide-react'
 
@@ -15,8 +15,14 @@ export default function Hero() {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
   const y = useTransform(scrollYProgress, [0, 0.5], [0, 100])
 
-  // Audio waves animation
-  const waves = Array.from({ length: 20 }, (_, i) => i)
+  // Audio waves animation - pre-generate random heights for stability
+  const waves = useMemo(() => {
+    return Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      maxHeight: 40 + Math.random() * 100,
+      duration: 0.5 + Math.random() * 0.5,
+    }))
+  }, [])
 
   return (
     <section
