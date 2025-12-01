@@ -254,7 +254,7 @@ export default function Contacto() {
                     className="touch-target w-full bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-all shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-2"
                   >
                     <Send size={18} className="sm:w-5 sm:h-5" />
-                    <span>Enviar Solicitud</span>
+                    <span>Enviar a WhatsApp</span>
                   </button>
                 </form>
               )}

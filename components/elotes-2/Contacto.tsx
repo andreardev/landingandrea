@@ -92,7 +92,7 @@ export default function Contacto() {
             className="w-full bg-gray-900 text-white px-8 py-4 font-medium hover:bg-gray-800 transition-all flex items-center justify-center gap-2"
           >
             <Send size={20} />
-            Enviar
+            Enviar a WhatsApp
           </button>
         </form>
       </div>
