@@ -174,7 +174,7 @@ export default function MatrizCodigoPage() {
         setHistorial(prev => [...prev, '✓ Access granted', '> '])
       }, 2000)
     } else {
-      setHistorial(prev => [...prev, '> ' + comando, 'Error: Command not found', 'Type "help" for available commands', '> '])
+      setHistorial(prev => [...prev, '> ' + comando, 'Error: Command not found', 'Type &quot;help&quot; for available commands', '> '])
     }
   }
 
@@ -246,7 +246,7 @@ export default function MatrizCodigoPage() {
               <div className="text-green-400 mb-4">
                 <div className="mb-2">Welcome to THE MATRIX</div>
                 <div className="mb-2">Type commands to explore our services</div>
-                <div className="mb-4">Type "help" for available commands</div>
+                <div className="mb-4">Type &quot;help&quot; for available commands</div>
               </div>
 
               {historial.map((line, index) => (
