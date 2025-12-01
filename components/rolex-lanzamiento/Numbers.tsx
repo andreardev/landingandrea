@@ -37,13 +37,25 @@ const stats = [
 ]
 
 function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
-  const ref = useRef<HTMLSpanElement>(null)
+  const textRef = useRef<HTMLSpanElement>(null)
   const motionValue = useMotionValue(0)
   const springValue = useSpring(motionValue, {
     damping: 60,
     stiffness: 100,
   })
-  const { inView: isInView } = useInView(ref, { threshold: 0.2, triggerOnce: true })
+  const { ref: inViewRef, inView: isInView } = useInView({ threshold: 0.2, triggerOnce: true })
+
+  // Combine refs
+  const combinedRef = (node: HTMLSpanElement | null) => {
+    if (textRef) {
+      (textRef as React.MutableRefObject<HTMLSpanElement | null>).current = node
+    }
+    if (typeof inViewRef === 'function') {
+      inViewRef(node)
+    } else if (inViewRef) {
+      (inViewRef as React.MutableRefObject<HTMLSpanElement | null>).current = node
+    }
+  }
 
   useEffect(() => {
     if (isInView) {
@@ -53,17 +65,17 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 
   useEffect(() => {
     springValue.on('change', (latest) => {
-      if (ref.current) {
+      if (textRef.current) {
         if (value < 1) {
-          ref.current.textContent = latest.toFixed(3) + suffix
+          textRef.current.textContent = latest.toFixed(3) + suffix
         } else {
-          ref.current.textContent = Math.round(latest).toLocaleString() + suffix
+          textRef.current.textContent = Math.round(latest).toLocaleString() + suffix
         }
       }
     })
   }, [springValue, suffix, value])
 
-  return <span ref={ref}>0{suffix}</span>
+  return <span ref={combinedRef}>0{suffix}</span>
 }
 
 export default function Numbers() {
