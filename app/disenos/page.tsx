@@ -74,6 +74,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80',
     preview: '/disenos/floreria-eventos',
   },
+  {
+    id: 'salon-eventos',
+    nombre: 'Salón de Eventos',
+    descripcion: 'Landing page elegante y profesional para salón de eventos con información de instalaciones, capacidad, servicios incluidos y galería.',
+    caracteristicas: ['Elegante', 'Profesional', 'Premium', 'Completo'],
+    color: 'from-amber-500 to-yellow-600',
+    imagen: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80',
+    preview: '/disenos/salon-eventos',
+  },
 ]
 
 export default function DiseñosPage() {
