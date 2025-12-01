@@ -173,6 +173,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80',
     preview: '/disenos/chef-virtual',
   },
+  {
+    id: 'caleidoscopio-momentos',
+    nombre: 'El Caleidoscopio de Momentos',
+    descripcion: 'Landing page única para fotografía con galería tipo caleidoscopio que gira mostrando diferentes momentos. Incluye efectos de luz y reflejos, interactividad con zoom mágico y patrones simétricos.',
+    caracteristicas: ['Interactivo', 'Visual', 'Caleidoscopio', 'Galería'],
+    color: 'from-purple-500 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800&q=80',
+    preview: '/disenos/caleidoscopio-momentos',
+  },
 ]
 
 export default function DiseñosPage() {
