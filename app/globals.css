@@ -225,6 +225,21 @@
   animation-delay: 6s;
 }
 
+@keyframes arena-fall {
+  0% {
+    transform: translateY(0) translateX(-50%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100px) translateX(-50%);
+    opacity: 0;
+  }
+}
+
+.animate-arena-fall {
+  animation: arena-fall 2s linear infinite;
+}
+
 /* Gradientes personalizados */
 .gradient-primary {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);

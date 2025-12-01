@@ -119,6 +119,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80',
     preview: '/disenos/espejo-magico',
   },
+  {
+    id: 'reloj-arena-amor',
+    nombre: 'El Reloj de Arena del Amor',
+    descripcion: 'Landing page romántica y elegante para eventos y bodas con reloj de arena animado que cuenta hacia el evento, partículas doradas formando corazones y efectos visuales románticos.',
+    caracteristicas: ['Romántico', 'Elegante', 'Interactivo', 'Animado'],
+    color: 'from-rose-500 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
+    preview: '/disenos/reloj-arena-amor',
+  },
 ]
 
 export default function DiseñosPage() {
