@@ -56,6 +56,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80',
     preview: '/disenos/reggaeton-lanzamiento',
   },
+  {
+    id: 'wedding-planner',
+    nombre: 'Wedding Planner',
+    descripcion: 'Landing page elegante y romántica para planificadores de bodas con diseño sofisticado, galería de eventos y proceso de trabajo detallado.',
+    caracteristicas: ['Elegante', 'Romántico', 'Profesional', 'Sofisticado'],
+    color: 'from-rose-500 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
+    preview: '/disenos/wedding-planner',
+  },
 ]
 
 export default function DiseñosPage() {
