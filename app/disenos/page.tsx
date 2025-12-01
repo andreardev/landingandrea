@@ -164,6 +164,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&q=80',
     preview: '/disenos/salon-gamer',
   },
+  {
+    id: 'chef-virtual',
+    nombre: 'El Chef Virtual',
+    descripcion: 'Landing page interactiva tipo juego para restaurante donde el usuario "cocina" eligiendo ingredientes. Al final muestra el plato recomendado con descuento especial. Incluye animaciones de ingredientes flotando.',
+    caracteristicas: ['Interactivo', 'Gamificado', 'Personalizado', 'Divertido'],
+    color: 'from-orange-500 to-red-600',
+    imagen: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80',
+    preview: '/disenos/chef-virtual',
+  },
 ]
 
 export default function DiseñosPage() {
