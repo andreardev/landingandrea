@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 import { Award, Clock, Globe, Users } from 'lucide-react'
 
 const stats = [
@@ -42,7 +43,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
     damping: 60,
     stiffness: 100,
   })
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const { inView: isInView } = useInView(ref, { threshold: 0.2, triggerOnce: true })
 
   useEffect(() => {
     if (isInView) {
