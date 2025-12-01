@@ -128,6 +128,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
     preview: '/disenos/reloj-arena-amor',
   },
+  {
+    id: 'laberinto-mente',
+    nombre: 'El Laberinto de la Mente',
+    descripcion: 'Landing page interactiva para psicólogo/terapia con navegación tipo laberinto 3D donde cada decisión revela información sobre servicios. Incluye efectos de profundidad y experiencia inmersiva.',
+    caracteristicas: ['Interactivo', '3D', 'Inmersivo', 'Gamificado'],
+    color: 'from-purple-500 to-indigo-600',
+    imagen: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80',
+    preview: '/disenos/laberinto-mente',
+  },
 ]
 
 export default function DiseñosPage() {
