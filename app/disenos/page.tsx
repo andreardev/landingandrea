@@ -83,6 +83,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80',
     preview: '/disenos/salon-eventos',
   },
+  {
+    id: 'maquillaje-peinado',
+    nombre: 'Maquillaje y Peinado',
+    descripcion: 'Landing page elegante y sofisticada para negocio de maquillaje y peinado profesional con portafolio, servicios y tipos de eventos.',
+    caracteristicas: ['Elegante', 'Belleza', 'Profesional', 'Sofisticado'],
+    color: 'from-pink-500 to-rose-600',
+    imagen: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80',
+    preview: '/disenos/maquillaje-peinado',
+  },
 ]
 
 export default function DiseñosPage() {
