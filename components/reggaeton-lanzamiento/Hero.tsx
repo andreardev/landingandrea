@@ -64,21 +64,21 @@ export default function Hero() {
       {/* Audio Waves */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="flex items-center gap-1">
-          {waves.map((wave, i) => (
+          {waves.map((wave) => (
             <motion.div
-              key={wave}
+              key={wave.id}
               className="w-1 bg-gradient-to-t from-purple-400 via-pink-400 to-cyan-400 rounded-full"
               initial={{ height: 20 }}
               animate={{
-                height: [20, Math.random() * 100 + 40, 20],
+                height: [20, wave.maxHeight, 20],
               }}
               transition={{
-                duration: 0.5 + Math.random() * 0.5,
+                duration: wave.duration,
                 repeat: Infinity,
-                delay: i * 0.05,
+                delay: wave.id * 0.05,
               }}
             />
-          })}
+          ))}
         </div>
       </div>
 
@@ -193,4 +193,3 @@ export default function Hero() {
     </section>
   )
 }
-
