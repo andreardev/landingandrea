@@ -5,11 +5,11 @@ import dynamic from 'next/dynamic'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, Sparkles } from 'lucide-react'
 
+// Dynamic imports para evitar problemas de SSR y compatibilidad
 const Canvas = dynamic(() => import('@react-three/fiber').then((mod) => mod.Canvas), { ssr: false })
 const OrbitControls = dynamic(() => import('@react-three/drei').then((mod) => mod.OrbitControls), { ssr: false })
 const Environment = dynamic(() => import('@react-three/drei').then((mod) => mod.Environment), { ssr: false })
 const PerspectiveCamera = dynamic(() => import('@react-three/drei').then((mod) => mod.PerspectiveCamera), { ssr: false })
-const MeshDistortMaterial = dynamic(() => import('@react-three/drei').then((mod) => mod.MeshDistortMaterial), { ssr: false })
 
 function WatchModel() {
   const meshRef = useRef<any>(null)
@@ -30,13 +30,12 @@ function WatchModel() {
     <>
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <torusGeometry args={[1, 0.3, 16, 100]} />
-        <MeshDistortMaterial
+        <meshStandardMaterial
           color="#d4af37"
-          attach="material"
-          distort={0.3}
-          speed={2}
           metalness={0.9}
           roughness={0.1}
+          emissive="#d4af37"
+          emissiveIntensity={0.2}
         />
       </mesh>
       <mesh position={[0, 0, 0]}>
@@ -59,17 +58,10 @@ export default function Hero() {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
   const y = useTransform(scrollYProgress, [0, 0.5], [0, -100])
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 2,
-        y: (e.clientY / window.innerHeight - 0.5) * 2,
-      })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    setMounted(true)
   }, [])
 
   return (
@@ -94,27 +86,29 @@ export default function Hero() {
       </div>
 
       {/* 3D Watch Scene */}
-      <motion.div
-        style={{ opacity, scale, y }}
-        className="absolute inset-0 z-10"
-      >
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 50 }}
-          style={{ background: 'transparent' }}
+      {mounted && (
+        <motion.div
+          style={{ opacity, scale, y }}
+          className="absolute inset-0 z-10"
         >
-          <PerspectiveCamera makeDefault position={[0, 0, 5]} />
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#d4af37" />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#d4af37" />
-          <WatchModel />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-          />
-        </Canvas>
-      </motion.div>
+          <Canvas
+            camera={{ position: [0, 0, 5], fov: 50 }}
+            style={{ background: 'transparent' }}
+          >
+            <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} intensity={1} color="#d4af37" />
+            <pointLight position={[-10, -10, -10]} intensity={0.5} color="#d4af37" />
+            <WatchModel />
+            <OrbitControls
+              enableZoom={false}
+              enablePan={false}
+              autoRotate
+              autoRotateSpeed={0.5}
+            />
+          </Canvas>
+        </motion.div>
+      )}
 
       {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
@@ -194,10 +188,10 @@ export default function Hero() {
       </div>
 
       {/* Floating Particles */}
-      {typeof window !== 'undefined' && [...Array(20)].map((_, i) => {
-        const initialX = Math.random() * (window.innerWidth || 1920)
-        const initialY = Math.random() * (window.innerHeight || 1080)
-        const targetY = Math.random() * (window.innerHeight || 1080)
+      {mounted && typeof window !== 'undefined' && [...Array(20)].map((_, i) => {
+        const initialX = Math.random() * window.innerWidth
+        const initialY = Math.random() * window.innerHeight
+        const targetY = Math.random() * window.innerHeight
         const duration = Math.random() * 3 + 2
         const delay = Math.random() * 2
         
@@ -225,4 +219,3 @@ export default function Hero() {
     </section>
   )
 }
-
