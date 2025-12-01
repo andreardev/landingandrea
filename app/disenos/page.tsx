@@ -155,6 +155,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
     preview: '/disenos/matriz-codigo',
   },
+  {
+    id: 'salon-gamer',
+    nombre: 'Salón de Fiestas Gamer',
+    descripcion: 'Landing page única que combina Tetris y Pac-Man para un salón de fiestas gamer. Juego interactivo donde el usuario controla a Pac-Man mientras bloques de Tetris caen, revelando información sobre servicios.',
+    caracteristicas: ['Gaming', 'Interactivo', 'Tetris', 'Pac-Man'],
+    color: 'from-purple-500 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&q=80',
+    preview: '/disenos/salon-gamer',
+  },
 ]
 
 export default function DiseñosPage() {
