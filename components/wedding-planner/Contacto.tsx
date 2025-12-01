@@ -1,11 +1,40 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Mail, Phone, MapPin, Send, Heart } from 'lucide-react'
+import { handleWhatsAppSubmit } from '@/lib/whatsapp'
 
 export default function Contacto() {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    mensaje: '',
+  })
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    handleWhatsAppSubmit(formData, 'Wedding Planner')
+    setIsSubmitted(true)
+    setTimeout(() => {
+      setIsSubmitted(false)
+      setFormData({
+        nombre: '',
+        email: '',
+        mensaje: '',
+      })
+    }, 3000)
+  }
 
   return (
     <section
