@@ -101,6 +101,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
     preview: '/disenos/fotografo-eventos',
   },
+  {
+    id: 'bola-de-cristal',
+    nombre: 'Bola de Cristal',
+    descripcion: 'Landing page interactiva y mágica de bola de la fortuna donde los usuarios pueden hacer preguntas y recibir respuestas aleatorias que invitan a reflexionar.',
+    caracteristicas: ['Interactivo', 'Mágico', 'Divertido', 'Reflexivo'],
+    color: 'from-indigo-500 to-purple-600',
+    imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&q=80',
+    preview: '/disenos/bola-de-cristal',
+  },
 ]
 
 export default function DiseñosPage() {
