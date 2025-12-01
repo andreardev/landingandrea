@@ -137,6 +137,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80',
     preview: '/disenos/laberinto-mente',
   },
+  {
+    id: 'jardin-serenidad',
+    nombre: 'El Jardín de la Serenidad',
+    descripcion: 'Landing page relajante para spa/belleza con parallax de plantas que crecen al hacer scroll, efectos de agua animados, elementos naturales interactivos y ambiente sereno.',
+    caracteristicas: ['Relajante', 'Parallax', 'Natural', 'Interactivo'],
+    color: 'from-green-500 to-emerald-600',
+    imagen: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
+    preview: '/disenos/jardin-serenidad',
+  },
 ]
 
 export default function DiseñosPage() {
