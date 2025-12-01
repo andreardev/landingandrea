@@ -110,6 +110,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&q=80',
     preview: '/disenos/bola-de-cristal',
   },
+  {
+    id: 'espejo-magico',
+    nombre: 'El Espejo Mágico',
+    descripcion: 'Landing page disruptiva para tienda de moda con espejo mágico que analiza el estilo del usuario y recomienda prendas personalizadas. Incluye efectos de espejo roto y recomendaciones en tiempo real.',
+    caracteristicas: ['Interactivo', 'AR Simulado', 'Personalizado', 'Innovador'],
+    color: 'from-purple-500 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80',
+    preview: '/disenos/espejo-magico',
+  },
 ]
 
 export default function DiseñosPage() {
