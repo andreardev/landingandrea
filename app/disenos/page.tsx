@@ -65,6 +65,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
     preview: '/disenos/wedding-planner',
   },
+  {
+    id: 'floreria-eventos',
+    nombre: 'Floristería Eventos',
+    descripcion: 'Landing page elegante y natural para floristería especializada en decoración de eventos sociales con galería de trabajos y tipos de eventos.',
+    caracteristicas: ['Natural', 'Elegante', 'Floral', 'Profesional'],
+    color: 'from-green-500 to-emerald-600',
+    imagen: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80',
+    preview: '/disenos/floreria-eventos',
+  },
 ]
 
 export default function DiseñosPage() {
