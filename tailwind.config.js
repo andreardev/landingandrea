@@ -20,6 +20,11 @@ module.exports = {
           800: '#9a3412',
           900: '#7c2d12',
         },
+        gold: {
+          400: '#f4d03f',
+          500: '#d4af37',
+          600: '#b8941f',
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],

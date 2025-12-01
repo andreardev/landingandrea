@@ -38,6 +38,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80',
     preview: '/disenos/elotes-4',
   },
+  {
+    id: 'rolex-lanzamiento',
+    nombre: 'Rolex Lanzamiento',
+    descripcion: 'Landing page épica con efectos 3D, animaciones avanzadas y experiencia inmersiva para lanzamiento de producto premium.',
+    caracteristicas: ['3D', 'Animaciones', 'Premium', 'Inmersivo'],
+    color: 'from-gold-500 to-yellow-600',
+    imagen: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+    preview: '/disenos/rolex-lanzamiento',
+  },
 ]
 
 export default function DiseñosPage() {
