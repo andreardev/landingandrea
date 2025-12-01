@@ -76,12 +76,35 @@ export default function MagicBallPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
-      {/* Efectos de fondo animados */}
+    <main className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
+      {/* Efectos de niebla animados */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        {/* Niebla base */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-black/90 to-gray-900/80"></div>
+        
+        {/* Capas de niebla flotante */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-white/5 rounded-full filter blur-3xl animate-blob opacity-60"></div>
+          <div className="absolute top-40 right-10 w-96 h-96 bg-purple-900/10 rounded-full filter blur-3xl animate-blob animation-delay-2000 opacity-50"></div>
+          <div className="absolute bottom-20 left-1/4 w-96 h-96 bg-indigo-900/10 rounded-full filter blur-3xl animate-blob animation-delay-4000 opacity-40"></div>
+          <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-gray-800/20 rounded-full filter blur-3xl animate-blob animation-delay-6000 opacity-30"></div>
+        </div>
+        
+        {/* Partículas de niebla */}
+        <div className="absolute inset-0">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-white/10 rounded-full filter blur-sm animate-fog-particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 10}s`,
+                animationDuration: `${15 + Math.random() * 10}s`,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Contenido principal */}
@@ -95,22 +118,171 @@ export default function MagicBallPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 text-shadow-lg">
             Haz tu Pregunta
           </h1>
-          <p className="text-lg sm:text-xl text-purple-200 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
             Formula una pregunta y deja que la magia te guíe hacia la respuesta
           </p>
         </div>
 
-        {/* Bola de la fortuna */}
+        {/* Bola de la fortuna con manos */}
         <div className="relative mb-8 sm:mb-12">
+          {/* Manos agarrando la bola */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+            {/* Mano izquierda */}
+            <div className="absolute -left-6 sm:-left-10 md:-left-14 top-1/2 -translate-y-1/2">
+              <svg
+                width="140"
+                height="220"
+                viewBox="0 0 140 220"
+                className="w-28 h-44 sm:w-36 sm:h-56 md:w-44 md:h-68 opacity-70"
+                style={{ filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.8))' }}
+              >
+                {/* Palma izquierda */}
+                <ellipse
+                  cx="50"
+                  cy="140"
+                  rx="35"
+                  ry="50"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo meñique izquierdo */}
+                <ellipse
+                  cx="25"
+                  cy="100"
+                  rx="8"
+                  ry="25"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo anular izquierdo */}
+                <ellipse
+                  cx="35"
+                  cy="85"
+                  rx="8"
+                  ry="30"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo medio izquierdo */}
+                <ellipse
+                  cx="50"
+                  cy="70"
+                  rx="8"
+                  ry="35"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo índice izquierdo */}
+                <ellipse
+                  cx="65"
+                  cy="80"
+                  rx="8"
+                  ry="30"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Pulgar izquierdo */}
+                <ellipse
+                  cx="75"
+                  cy="120"
+                  rx="12"
+                  ry="25"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                  transform="rotate(-30 75 120)"
+                />
+              </svg>
+            </div>
+            
+            {/* Mano derecha */}
+            <div className="absolute -right-6 sm:-right-10 md:-right-14 top-1/2 -translate-y-1/2">
+              <svg
+                width="140"
+                height="220"
+                viewBox="0 0 140 220"
+                className="w-28 h-44 sm:w-36 sm:h-56 md:w-44 md:h-68 opacity-70"
+                style={{ filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.8))', transform: 'scaleX(-1)' }}
+              >
+                {/* Palma derecha */}
+                <ellipse
+                  cx="50"
+                  cy="140"
+                  rx="35"
+                  ry="50"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo meñique derecho */}
+                <ellipse
+                  cx="25"
+                  cy="100"
+                  rx="8"
+                  ry="25"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo anular derecho */}
+                <ellipse
+                  cx="35"
+                  cy="85"
+                  rx="8"
+                  ry="30"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo medio derecho */}
+                <ellipse
+                  cx="50"
+                  cy="70"
+                  rx="8"
+                  ry="35"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Dedo índice derecho */}
+                <ellipse
+                  cx="65"
+                  cy="80"
+                  rx="8"
+                  ry="30"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                />
+                {/* Pulgar derecho */}
+                <ellipse
+                  cx="75"
+                  cy="120"
+                  rx="12"
+                  ry="25"
+                  fill="rgba(120, 120, 120, 0.5)"
+                  stroke="rgba(80, 80, 80, 0.6)"
+                  strokeWidth="1.5"
+                  transform="rotate(-30 75 120)"
+                />
+              </svg>
+            </div>
+          </div>
+
           <div
-            className={`relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 ${
+            className={`relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 z-10 ${
               agitando ? 'animate-shake' : ''
             } transition-transform duration-300`}
           >
             {/* Bola exterior con efecto 3D */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-2xl">
               {/* Reflejo superior */}
-              <div className="absolute top-8 left-12 w-24 h-24 sm:top-12 sm:left-16 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-white/30 to-transparent blur-sm"></div>
+              <div className="absolute top-8 left-12 w-24 h-24 sm:top-12 sm:left-16 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-white/20 to-transparent blur-sm"></div>
               
               {/* Ventana circular (donde aparece la respuesta) */}
               <div className="absolute inset-8 sm:inset-10 md:inset-12 rounded-full bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 flex items-center justify-center shadow-inner">
