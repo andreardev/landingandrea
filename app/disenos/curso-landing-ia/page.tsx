@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { 
   Code, Rocket, Zap, CheckCircle2, ArrowRight, Play, 
   Terminal, Github, Globe, Sparkles, Timer, Star,
-  ChevronDown, ChevronUp, Copy, ExternalLink
+  ChevronDown, ChevronUp, Copy, ExternalLink, MessageCircle, Video
 } from 'lucide-react'
 
 export default function CursoLandingIAPage() {
@@ -223,7 +223,6 @@ listo para publicar."`,
   const siguientePaso = () => {
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -432,6 +431,36 @@ listo para publicar."`,
                 <span>Siguiente</span>
                 <ChevronDown size={20} />
               </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Sección Curso 1 a 1 */}
+        <section className="max-w-5xl mx-auto px-4 py-20">
+          <div className="bg-gradient-to-br from-yellow-500/20 via-orange-500/20 to-pink-500/20 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border-2 border-yellow-500/30 shadow-2xl">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full mb-4">
+                <Video size={32} className="text-white" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
+                ¿Necesitas Ayuda Personalizada?
+              </h2>
+              <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto">
+                Si te ha quedado una duda, o prefieres ir siendo guiado paso a paso, puedes comprar el{' '}
+                <span className="font-bold text-yellow-300">Curso 1 a 1 por Google Meet</span> donde me aseguraré que logres publicar tu landing page.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href="https://wa.me/528126902979?text=quiero%20curso%20landingpage%20en%2060%20minutos%20con%20ia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl hover:shadow-green-500/50 transition-all transform hover:scale-105 active:scale-95 w-full sm:w-auto justify-center"
+              >
+                <MessageCircle size={24} />
+                <span>Contactar por WhatsApp</span>
+              </a>
             </div>
           </div>
         </section>
