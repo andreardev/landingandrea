@@ -218,6 +218,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
     preview: '/disenos/invitacion-boda',
   },
+  {
+    id: 'curso-landing-ia',
+    nombre: 'Curso Landing Page con IA',
+    descripcion: 'Landing page disruptiva para curso en línea sobre cómo crear landing pages usando Cursor, GitHub y Vercel. Incluye navegación interactiva por 9 pasos, barra de progreso sticky, partículas animadas, timer de 60 minutos, código de ejemplo copiable, diseño moderno con gradientes púrpura/rosa y experiencia inmersiva.',
+    caracteristicas: ['Interactivo', 'Curso', 'Progreso', 'Animado'],
+    color: 'from-purple-600 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80',
+    preview: '/disenos/curso-landing-ia',
+  },
 ]
 
 export default function DiseñosPage() {
