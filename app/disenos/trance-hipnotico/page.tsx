@@ -8,9 +8,12 @@ interface Evento {
   fecha: string
   hora: string
   lugar: string
+  direccion: string
   ciudad: string
-  precio: string
+  precioIndividual: string
+  precioPareja: string
   disponible: boolean
+  lugaresDisponibles: number
 }
 
 export default function TranceHipnoticoPage() {
@@ -24,41 +27,24 @@ export default function TranceHipnoticoPage() {
   const eventos: Evento[] = [
     {
       id: 1,
-      fecha: '15 de Marzo, 2024',
-      hora: '8:00 PM',
-      lugar: 'Teatro Principal',
-      ciudad: 'Ciudad de México',
-      precio: '$500',
+      fecha: 'Domingo 14 de Diciembre, 2025',
+      hora: 'Jornada de 3 horas',
+      lugar: 'Salón Dos Tierras',
+      direccion: 'Carretera Xoconostle Km 2 Dolores Hidalgo, antes del Hospital General',
+      ciudad: 'Dolores Hidalgo, Guanajuato',
+      precioIndividual: 'MX $300',
+      precioPareja: 'MX $500',
       disponible: true,
-    },
-    {
-      id: 2,
-      fecha: '22 de Marzo, 2024',
-      hora: '7:30 PM',
-      lugar: 'Auditorio Nacional',
-      ciudad: 'Guadalajara',
-      precio: '$450',
-      disponible: true,
-    },
-    {
-      id: 3,
-      fecha: '29 de Marzo, 2024',
-      hora: '9:00 PM',
-      lugar: 'Palacio de Convenciones',
-      ciudad: 'Monterrey',
-      precio: '$550',
-      disponible: true,
-    },
-    {
-      id: 4,
-      fecha: '5 de Abril, 2024',
-      hora: '8:30 PM',
-      lugar: 'Centro Cultural',
-      ciudad: 'Puebla',
-      precio: '$400',
-      disponible: false,
+      lugaresDisponibles: 70,
     },
   ]
+
+  const hipnoterapeuta = {
+    nombre: 'MH Lic Tonatiuh Cavazos Gallegos',
+    titulo: 'Master Hipnoterapeuta Clínico',
+    paises: 'México | España | Colombia',
+    whatsapp: '418 158 3827',
+  }
 
   // Crear partículas que siguen el mouse
   useEffect(() => {
@@ -182,10 +168,10 @@ export default function TranceHipnoticoPage() {
             <span className="text-sm sm:text-base font-medium text-white">Experiencia Hipnótica</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 text-shadow-lg">
-            Entra en el Trance
+            Descubre el Poder de La Hipnosis en Familia
           </h1>
-          <p className="text-lg sm:text-xl text-purple-200 max-w-2xl mx-auto">
-            Descubre tus próximas fechas a través de una experiencia única e inmersiva
+          <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto">
+            Una jornada de 3 horas donde aprenderás a aplicar hipnosis en casa para reducir el estrés, mejorar el sueño y controlar emociones, seguridad, procrastinación, memoria y más. Ideal para padres e hijos que buscan bienestar integral.
           </p>
         </div>
 
@@ -304,74 +290,116 @@ export default function TranceHipnoticoPage() {
                 <span className="text-sm sm:text-base font-medium text-white">Próximas Fechas</span>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-                Tus Próximos Eventos
+                Taller Hipnosis Grupal
               </h2>
               <p className="text-lg sm:text-xl text-purple-200">
-                El trance ha revelado las fechas disponibles
+                El trance ha revelado la información del evento
               </p>
             </div>
 
-            {/* Grid de eventos */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
+            {/* Información del Evento */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8">
+              {/* Evento Principal */}
               {eventos.map((evento, index) => (
                 <div
                   key={evento.id}
                   className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:border-purple-400/50 transition-all transform hover:scale-105 animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Calendar size={20} className="text-purple-300" />
-                        <span className="text-purple-300 text-sm font-semibold">{evento.fecha}</span>
-                      </div>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">{evento.lugar}</h3>
-                      <div className="flex items-center gap-4 text-gray-300 mb-4">
-                        <div className="flex items-center gap-2">
-                          <MapPin size={18} className="text-purple-300" />
-                          <span>{evento.ciudad}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock size={18} className="text-purple-300" />
-                          <span>{evento.hora}</span>
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Calendar size={24} className="text-purple-300" />
+                      <span className="text-purple-300 text-lg font-semibold">{evento.fecha}</span>
+                    </div>
+                    <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">{evento.lugar}</h3>
+                    <div className="space-y-3 text-gray-300 mb-6">
+                      <div className="flex items-start gap-2">
+                        <MapPin size={20} className="text-purple-300 mt-1 flex-shrink-0" />
+                        <div>
+                          <p className="font-semibold text-white mb-1">Dirección:</p>
+                          <p>{evento.direccion}</p>
+                          <p className="text-purple-300">{evento.ciudad}</p>
                         </div>
                       </div>
+                      <div className="flex items-center gap-2">
+                        <Clock size={20} className="text-purple-300" />
+                        <span className="font-semibold">{evento.hora}</span>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-3xl font-bold text-purple-300 mb-1">{evento.precio}</div>
-                      {evento.disponible ? (
-                        <span className="inline-block px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-xs font-semibold border border-green-400/30">
-                          Disponible
-                        </span>
-                      ) : (
-                        <span className="inline-block px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-xs font-semibold border border-red-400/30">
-                          Agotado
-                        </span>
-                      )}
-                    </div>
-                  </div>
 
-                  {evento.disponible && (
-                    <button className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 active:scale-95">
-                      Reservar Ahora
-                    </button>
-                  )}
+                    {/* Precios */}
+                    <div className="bg-purple-500/20 rounded-xl p-4 mb-6 border border-purple-400/30">
+                      <p className="text-white font-semibold mb-3 text-lg">Inversión:</p>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-300">Por persona:</span>
+                          <span className="text-2xl font-bold text-purple-300">{evento.precioIndividual}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-300">En pareja:</span>
+                          <span className="text-2xl font-bold text-purple-300">{evento.precioPareja}</span>
+                        </div>
+                      </div>
+                      <p className="text-purple-200 text-sm mt-3">Ven con tu hijo o hija</p>
+                      <p className="text-yellow-300 font-semibold mt-2">Sólo {evento.lugaresDisponibles} lugares disponibles</p>
+                    </div>
+
+                    {evento.disponible && (
+                      <a
+                        href={`https://wa.me/52${hipnoterapeuta.whatsapp.replace(/\s/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-4 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
+                      >
+                        <span>Reservar al WhatsApp</span>
+                        <span className="text-xl font-bold">{hipnoterapeuta.whatsapp}</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               ))}
+
+              {/* Información del Hipnoterapeuta */}
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:border-purple-400/50 transition-all animate-fade-in-up">
+                <div className="text-center mb-6">
+                  <div className="w-32 h-32 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <Eye size={64} className="text-white" />
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">{hipnoterapeuta.nombre}</h3>
+                  <p className="text-purple-300 font-semibold mb-4">{hipnoterapeuta.titulo}</p>
+                  <p className="text-gray-300">{hipnoterapeuta.paises}</p>
+                </div>
+
+                <div className="bg-purple-500/20 rounded-xl p-4 border border-purple-400/30">
+                  <p className="text-white font-semibold mb-2">Contacto:</p>
+                  <a
+                    href={`https://wa.me/52${hipnoterapeuta.whatsapp.replace(/\s/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105"
+                  >
+                    <span>WhatsApp: {hipnoterapeuta.whatsapp}</span>
+                  </a>
+                </div>
+              </div>
             </div>
 
             {/* CTA Final */}
             <div className="bg-gradient-to-r from-purple-600/20 to-indigo-600/20 backdrop-blur-md rounded-2xl p-8 sm:p-12 border-2 border-purple-400/30 text-center">
               <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                ¿Listo para la Experiencia?
+                ¿Listo para Transformar tu Vida?
               </h3>
               <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                Reserva tu lugar ahora y prepárate para una experiencia transformadora
+                Reserva tu lugar ahora y prepárate para una experiencia transformadora de bienestar integral para toda la familia
               </p>
-              <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 mx-auto">
-                <Calendar size={24} />
-                <span>Ver Todas las Fechas</span>
-              </button>
+              <a
+                href={`https://wa.me/52${hipnoterapeuta.whatsapp.replace(/\s/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 active:scale-95"
+              >
+                <span>Reservar al WhatsApp: {hipnoterapeuta.whatsapp}</span>
+              </a>
             </div>
           </div>
         )}
