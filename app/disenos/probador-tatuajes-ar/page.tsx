@@ -98,17 +98,41 @@ export default function ProbadorTatuajesARPage() {
   // Activar cámara
   const activarCamara = async () => {
     try {
+      setCamaraActiva(true)
+      setErrorCamara(null)
+      
       const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'user' } 
+        video: { 
+          facingMode: 'user',
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        } 
       })
+      
       if (videoRef.current) {
         videoRef.current.srcObject = stream
         streamRef.current = stream
-        setCamaraActiva(true)
-        setErrorCamara(null)
+        
+        // Esperar a que el video esté listo
+        videoRef.current.onloadedmetadata = () => {
+          if (videoRef.current) {
+            videoRef.current.play().catch(err => {
+              console.error('Error al reproducir video:', err)
+            })
+          }
+        }
+        
+        // Scroll a la sección de la cámara después de un breve delay
+        setTimeout(() => {
+          const videoElement = document.querySelector('[data-video-container]')
+          if (videoElement) {
+            videoElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }
+        }, 500)
       }
     } catch (error) {
       setErrorCamara('No se pudo acceder a la cámara. Por favor, permite el acceso.')
+      setCamaraActiva(false)
       console.error('Error al acceder a la cámara:', error)
     }
   }
@@ -219,21 +243,47 @@ export default function ProbadorTatuajesARPage() {
 
         {/* Vista de Cámara AR */}
         {camaraActiva && (
-          <div className="max-w-4xl mx-auto w-full">
+          <div className="max-w-4xl mx-auto w-full mt-8" data-video-container>
             <div className="bg-black/60 backdrop-blur-xl rounded-3xl p-6 border-2 border-purple-500/30 shadow-2xl">
-              <div className="relative aspect-video bg-black rounded-xl overflow-hidden mb-6">
+              <h2 className="text-2xl font-bold mb-4 text-center text-purple-300">Vista en Tiempo Real</h2>
+              <div className="relative w-full bg-black rounded-xl overflow-hidden mb-6 border-2 border-purple-500/50" style={{ minHeight: '400px', maxHeight: '600px' }}>
                 <video
                   ref={videoRef}
                   autoPlay
                   playsInline
                   muted
                   className="w-full h-full object-cover"
+                  style={{ 
+                    minHeight: '400px', 
+                    maxHeight: '600px',
+                    display: 'block'
+                  }}
                 />
+                
+                {/* Indicador de carga */}
+                {camaraActiva && (!videoRef.current || videoRef.current.readyState < 2) && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
+                      <p className="text-purple-300">Cargando cámara...</p>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Mensaje si no hay video */}
+                {camaraActiva && videoRef.current && !videoRef.current.srcObject && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20">
+                    <div className="text-center">
+                      <Camera size={48} className="text-purple-400 mx-auto mb-4" />
+                      <p className="text-purple-300">Esperando señal de cámara...</p>
+                    </div>
+                  </div>
+                )}
                 
                 {/* Overlay del tatuaje */}
                 {tatuajeSeleccionado && (
                   <div
-                    className="absolute pointer-events-none"
+                    className="absolute pointer-events-none z-10"
                     style={{
                       left: `${posicion.x}%`,
                       top: `${posicion.y}%`,
