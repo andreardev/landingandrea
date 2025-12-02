@@ -209,6 +209,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&q=80',
     preview: '/disenos/trance-hipnotico',
   },
+  {
+    id: 'invitacion-boda',
+    nombre: 'Invitación Web de Boda',
+    descripcion: 'Invitación web disruptiva e interactiva para boda con efecto de carta que se desdobla. Incluye confeti animado, corazones flotantes, navegación por secciones (historia, fecha, ubicación, RSVP), cuenta regresiva animada, formulario de confirmación y diseño elegante y romántico.',
+    caracteristicas: ['Interactivo', 'Romántico', 'Carta', 'RSVP'],
+    color: 'from-rose-400 to-pink-500',
+    imagen: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
+    preview: '/disenos/invitacion-boda',
+  },
 ]
 
 export default function DiseñosPage() {
