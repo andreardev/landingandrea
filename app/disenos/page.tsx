@@ -236,6 +236,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80',
     preview: '/disenos/gta-vi-lanzamiento',
   },
+  {
+    id: 'probador-tatuajes-ar',
+    nombre: 'Probador Virtual de Tatuajes AR',
+    descripcion: 'Landing page disruptiva con Realidad Aumentada para probar tatuajes en tiempo real. Incluye activación de cámara web, overlay de tatuajes sobre video en vivo, controles interactivos (posición X/Y, tamaño 50-200%, rotación 0-360°), galería de 8 diseños con información de artista y precio, captura y descarga de fotos con tatuaje aplicado, selector de tatuajes cuando la cámara está activa, diseño oscuro con gradientes púrpura/rosa y sección para agendar cita.',
+    caracteristicas: ['AR', 'Interactivo', 'Cámara', 'Realidad Aumentada'],
+    color: 'from-purple-600 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1605647540924-852290d6d5ee?w=800&q=80',
+    preview: '/disenos/probador-tatuajes-ar',
+  },
 ]
 
 export default function DiseñosPage() {
