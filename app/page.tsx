@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Zap, Target, TrendingUp, Smartphone, Palette, Users, Award, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Zap, Target, TrendingUp, Smartphone, Palette, Users, Award, CheckCircle2, Sparkles, Clock, Code, Gem, ChefHat } from 'lucide-react'
 
 export default function Home() {
   const beneficios = [
@@ -29,8 +29,8 @@ export default function Home() {
     },
     {
       icon: Palette,
-      title: 'Diseños Modernos y Elegantes',
-      description: 'Estética profesional que refleja la calidad de tu negocio y genera confianza instantánea.',
+      title: 'Experiencias Interactivas Únicas',
+      description: 'Cada landing page es una experiencia única. Gamificación, animaciones avanzadas y elementos interactivos que capturan la atención.',
       color: 'from-indigo-500 to-purple-500',
     },
     {
@@ -69,21 +69,21 @@ export default function Home() {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white py-12 sm:py-16 lg:py-20">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-4 sm:mb-6 animate-fade-in">
-            <Award size={16} className="text-yellow-300 sm:w-[18px] sm:h-[18px]" />
-            <span className="text-xs sm:text-sm font-medium">Landing Pages que Convierten</span>
+            <Sparkles size={16} className="text-yellow-300 sm:w-[18px] sm:h-[18px]" />
+            <span className="text-xs sm:text-sm font-medium">Landing Pages Disruptivas</span>
           </div>
 
           {/* Heading - Mobile Optimized */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold mb-4 sm:mb-6 text-balance leading-[1.1] px-2 animate-fade-in-up">
-            Landing Pages que
+            No Más Landing Pages
             <br />
-            <span className="text-primary-200">Realmente Convierten</span>
+            <span className="text-primary-200">Aburridas</span>
           </h1>
 
           {/* Description */}
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-gray-100 max-w-3xl mx-auto text-balance px-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            Diseñamos landing pages estratégicas que transforman visitantes en clientes.
-            Cada elemento está pensado para maximizar tus conversiones y hacer crecer tu negocio.
+            Creamos experiencias disruptivas e interactivas que capturan la atención y convierten visitantes en clientes.
+            Olvídate de las landing pages clásicas. Aquí encontrarás innovación, interactividad y resultados extraordinarios.
           </p>
 
           {/* CTA Buttons - Mobile First */}
@@ -130,15 +130,119 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Ejemplos Destacados - Mobile First */}
+      <section className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary-100 text-primary-700 px-4 py-2 rounded-full mb-4">
+              <Sparkles size={20} className="text-primary-600" />
+              <span className="text-sm font-semibold">Ejemplos Disruptivos</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-3 sm:mb-4 px-4">
+              Experiencias que Rompen el Molde
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
+              Descubre cómo transformamos conceptos tradicionales en experiencias interactivas e inolvidables
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">
+            {/* Bola de Cristal */}
+            <Link
+              href="/disenos/bola-de-cristal"
+              className="group relative bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 active:scale-95"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="p-6 sm:p-8 text-white relative z-10">
+                <div className="inline-flex p-3 bg-white/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                  <Gem size={32} />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">Bola de Cristal</h3>
+                <p className="text-white/90 text-sm sm:text-base mb-4">
+                  Experiencia mágica e interactiva donde los usuarios hacen preguntas y reciben respuestas reflexivas
+                </p>
+                <div className="flex items-center gap-2 text-sm font-semibold">
+                  <span>Explorar</span>
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            {/* Reloj de Arena */}
+            <Link
+              href="/disenos/reloj-arena-amor"
+              className="group relative bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 active:scale-95"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="p-6 sm:p-8 text-white relative z-10">
+                <div className="inline-flex p-3 bg-white/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                  <Clock size={32} />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">Reloj de Arena del Amor</h3>
+                <p className="text-white/90 text-sm sm:text-base mb-4">
+                  Cuenta regresiva romántica con arena animada y partículas doradas para eventos especiales
+                </p>
+                <div className="flex items-center gap-2 text-sm font-semibold">
+                  <span>Explorar</span>
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            {/* Matriz del Código */}
+            <Link
+              href="/disenos/matriz-codigo"
+              className="group relative bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 active:scale-95"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="p-6 sm:p-8 text-white relative z-10">
+                <div className="inline-flex p-3 bg-white/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                  <Code size={32} />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">La Matriz del Código</h3>
+                <p className="text-white/90 text-sm sm:text-base mb-4">
+                  Terminal interactiva estilo Matrix donde "hackeas" para descubrir información sobre servicios
+                </p>
+                <div className="flex items-center gap-2 text-sm font-semibold">
+                  <span>Explorar</span>
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            {/* Chef Virtual */}
+            <Link
+              href="/disenos/chef-virtual"
+              className="group relative bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 active:scale-95"
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="p-6 sm:p-8 text-white relative z-10">
+                <div className="inline-flex p-3 bg-white/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                  <ChefHat size={32} />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">El Chef Virtual</h3>
+                <p className="text-white/90 text-sm sm:text-base mb-4">
+                  Juego interactivo donde "cocinas" eligiendo ingredientes y recibes recomendaciones personalizadas
+                </p>
+                <div className="flex items-center gap-2 text-sm font-semibold">
+                  <span>Explorar</span>
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Por Qué Section - Mobile First */}
       <section id="por-que" className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 lg:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-3 sm:mb-4 px-4">
-              ¿Por Qué Nuestras Landing Pages Convierten?
+              ¿Por Qué Nuestras Landing Pages Son Diferentes?
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-              No es solo diseño bonito. Es estrategia, psicología y datos trabajando juntos.
+              No creamos páginas estáticas. Creamos experiencias interactivas que generan conexión emocional y conversiones extraordinarias.
             </p>
           </div>
 
@@ -201,10 +305,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-white shadow-2xl">
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-3 sm:mb-4">
-              ¿Listo para Ver los Diseños?
+              ¿Listo para una Landing Page Disruptiva?
             </h3>
             <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-primary-100">
-              Explora nuestras diferentes variantes y encuentra el estilo perfecto para tu negocio
+              Explora todos nuestros diseños disruptivos y descubre cómo podemos transformar tu negocio con experiencias únicas e interactivas
             </p>
             <Link
               href="/disenos"

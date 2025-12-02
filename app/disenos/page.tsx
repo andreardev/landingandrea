@@ -199,14 +199,14 @@ export default function DiseñosPage() {
           </Link>
           <div className="text-center">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-4 sm:mb-6">
-              <Palette size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="text-xs sm:text-sm font-medium">Galería de Diseños</span>
+              <Sparkles size={16} className="sm:w-[18px] sm:h-[18px]" />
+              <span className="text-xs sm:text-sm font-medium">Landing Pages Disruptivas</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-3 sm:mb-4 px-4">
-              Explora Nuestros Diseños
+              Experiencias que Rompen el Molde
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-primary-100 max-w-2xl mx-auto px-4">
-              Cada diseño está optimizado para conversión. Elige el estilo que mejor represente tu marca.
+            <p className="text-base sm:text-lg md:text-xl text-primary-100 max-w-3xl mx-auto px-4">
+              Olvídate de las landing pages aburridas. Aquí encontrarás experiencias interactivas, gamificadas e innovadoras que capturan la atención y convierten visitantes en clientes. Cada diseño es único, disruptivo y diseñado para generar resultados extraordinarios.
             </p>
           </div>
         </div>
@@ -276,10 +276,10 @@ export default function DiseñosPage() {
       <section className="py-8 sm:py-12 lg:py-16 bg-white safe-bottom">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="text-2xl sm:text-3xl font-display font-bold text-gray-900 mb-3 sm:mb-4">
-            ¿No encuentras el diseño perfecto?
+            ¿Listo para tu Landing Page Disruptiva?
           </h3>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">
-            Podemos crear un diseño personalizado específicamente para tu negocio
+            Podemos crear una experiencia única e interactiva específicamente diseñada para tu negocio. Rompamos el molde juntos.
           </p>
           <a
             href="#contacto"
