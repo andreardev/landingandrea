@@ -11,34 +11,64 @@ export default function EspejoBarberiaPage() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fotoCanvasRef = useRef<HTMLCanvasElement>(null)
+  const streamRef = useRef<MediaStream | null>(null)
 
   // Activar cámara cuando se pasa a fase 'camara'
   useEffect(() => {
     if (fase === 'camara') {
+      // Verificar si el navegador soporta getUserMedia
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        console.error('getUserMedia no está soportado en este navegador')
+        alert('Tu navegador no soporta el acceso a la cámara. Por favor, usa un navegador moderno.')
+        setFase('informacion')
+        return
+      }
+
       navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: 'user' } })
+        .getUserMedia({ 
+          video: { 
+            facingMode: 'user',
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          } 
+        })
         .then((mediaStream) => {
+          streamRef.current = mediaStream
           setStream(mediaStream)
           if (videoRef.current) {
             videoRef.current.srcObject = mediaStream
+            // Asegurarse de que el video se reproduzca
+            videoRef.current.play().catch((error) => {
+              console.error('Error al reproducir el video:', error)
+            })
           }
         })
         .catch((error) => {
           console.error('Error al acceder a la cámara:', error)
-          // Si no hay cámara, simular con un canvas
+          alert('No se pudo acceder a la cámara. Por favor, verifica los permisos de tu navegador.')
+          // Si no hay cámara, ir directamente a información
           setFase('informacion')
         })
     } else {
       // Detener stream cuando no está en fase camara
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop())
+        streamRef.current = null
+      }
       if (stream) {
         stream.getTracks().forEach((track) => track.stop())
         setStream(null)
       }
+      if (videoRef.current) {
+        videoRef.current.srcObject = null
+      }
     }
 
     return () => {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop())
+      // Cleanup: detener stream al desmontar o cambiar de fase
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop())
+        streamRef.current = null
       }
     }
   }, [fase])
@@ -70,27 +100,37 @@ export default function EspejoBarberiaPage() {
   }
 
   const tomarFoto = () => {
-    if (videoRef.current && fotoCanvasRef.current) {
+    if (videoRef.current && fotoCanvasRef.current && stream) {
       const video = videoRef.current
       const canvas = fotoCanvasRef.current
       const ctx = canvas.getContext('2d')
 
-      if (ctx) {
+      if (ctx && video.videoWidth > 0 && video.videoHeight > 0) {
         canvas.width = video.videoWidth
         canvas.height = video.videoHeight
-        ctx.drawImage(video, 0, 0)
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
 
         const fotoData = canvas.toDataURL('image/png')
         setFotoTomada(fotoData)
 
         // Detener la cámara
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach((track) => track.stop())
+          streamRef.current = null
+        }
         if (stream) {
           stream.getTracks().forEach((track) => track.stop())
           setStream(null)
         }
+        if (videoRef.current) {
+          videoRef.current.srcObject = null
+        }
 
         // Romper el espejo
         setFase('rompiendo')
+      } else {
+        console.error('El video no está listo para capturar')
+        alert('Espera un momento mientras la cámara se activa...')
       }
     }
   }
@@ -151,21 +191,35 @@ export default function EspejoBarberiaPage() {
                 playsInline
                 muted
                 className="w-full h-full object-cover scale-x-[-1]"
+                style={{ transform: 'scaleX(-1)' }}
               />
 
-              {/* Overlay con instrucciones */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 flex flex-col items-center justify-end pb-8">
-                <div className="text-center text-white">
-                  <p className="text-xl font-semibold mb-4">Sonríe y prepárate...</p>
-                  <button
-                    onClick={tomarFoto}
-                    className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-110 active:scale-95 flex items-center gap-3 mx-auto"
-                  >
-                    <Camera size={24} />
-                    <span>Tomar Foto</span>
-                  </button>
+              {/* Indicador de carga mientras se activa la cámara */}
+              {!stream && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+                  <div className="text-center text-white">
+                    <div className="inline-block w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p className="text-lg font-semibold">Activando cámara...</p>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Overlay con instrucciones */}
+              {stream && (
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 flex flex-col items-center justify-end pb-8">
+                  <div className="text-center text-white">
+                    <p className="text-xl font-semibold mb-4">Sonríe y prepárate...</p>
+                    <button
+                      onClick={tomarFoto}
+                      disabled={!stream}
+                      className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-110 active:scale-95 flex items-center gap-3 mx-auto"
+                    >
+                      <Camera size={24} />
+                      <span>Tomar Foto</span>
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Efecto de espejo (reflejo) */}
               <div className="absolute inset-0 pointer-events-none">
