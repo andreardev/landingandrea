@@ -200,6 +200,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80',
     preview: '/disenos/espejo-barberia',
   },
+  {
+    id: 'trance-hipnotico',
+    nombre: 'Trance Hipnótico',
+    descripcion: 'Landing page disruptiva para hipnotizador con experiencia interactiva única. Espiral hipnótica girando en el centro, ojos que siguen el cursor del mouse, partículas que reaccionan al movimiento. Al hacer click en la espiral, el usuario "entra en trance" y se revelan las próximas fechas de eventos.',
+    caracteristicas: ['Interactivo', 'Hipnótico', 'Visual', 'Gamificado'],
+    color: 'from-purple-500 to-indigo-600',
+    imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&q=80',
+    preview: '/disenos/trance-hipnotico',
+  },
 ]
 
 export default function DiseñosPage() {
