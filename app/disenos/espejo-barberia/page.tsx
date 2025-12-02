@@ -155,8 +155,8 @@ export default function EspejoBarberiaPage() {
           <div className="w-full max-w-4xl animate-fade-in">
             <div className="relative aspect-[4/5] bg-gradient-to-br from-gray-700 to-gray-900 rounded-3xl overflow-hidden border-8 border-gray-600 shadow-2xl">
               {/* Marco del espejo */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
+              <div className="absolute inset-0 flex items-center justify-center z-10">
+                <div className="text-center relative z-10">
                   <div className="inline-flex items-center justify-center w-32 h-32 bg-white/10 rounded-full mb-6 backdrop-blur-sm border-4 border-white/20">
                     <Camera size={48} className="text-white/60" />
                   </div>
@@ -175,7 +175,7 @@ export default function EspejoBarberiaPage() {
               </div>
 
               {/* Efecto de reflejo del espejo */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/10"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/10 pointer-events-none"></div>
             </div>
           </div>
         )}
