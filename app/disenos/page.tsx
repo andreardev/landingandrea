@@ -191,6 +191,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
     preview: '/disenos/ola-servicio',
   },
+  {
+    id: 'espejo-barberia',
+    nombre: 'El Espejo de la Barbería',
+    descripcion: 'Landing page disruptiva para barbería que comienza como un espejo simple. Al activar la cámara, el usuario se ve reflejado, toma una foto y el espejo se rompe revelando información de la barbería y botón para agendar cita. Experiencia interactiva única.',
+    caracteristicas: ['Interactivo', 'Cámara', 'Efectos', 'Gamificado'],
+    color: 'from-gray-700 to-amber-600',
+    imagen: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80',
+    preview: '/disenos/espejo-barberia',
+  },
 ]
 
 export default function DiseñosPage() {
