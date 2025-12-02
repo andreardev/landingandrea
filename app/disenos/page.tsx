@@ -182,6 +182,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800&q=80',
     preview: '/disenos/caleidoscopio-momentos',
   },
+  {
+    id: 'ola-servicio',
+    nombre: 'La Ola del Servicio',
+    descripcion: 'Landing page disruptiva para negocio de pipas de agua potable con mapa interactivo donde el usuario selecciona su zona y visualiza el flujo de agua hacia ella. Incluye efectos de ondas animadas, gotas flotantes y sistema de solicitud de servicio.',
+    caracteristicas: ['Interactivo', 'Mapa', 'Efectos Agua', 'Visualización'],
+    color: 'from-blue-500 to-cyan-600',
+    imagen: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
+    preview: '/disenos/ola-servicio',
+  },
 ]
 
 export default function DiseñosPage() {
