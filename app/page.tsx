@@ -201,7 +201,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">La Matriz del Código</h3>
                 <p className="text-white/90 text-sm sm:text-base mb-4">
-                  Terminal interactiva estilo Matrix donde "hackeas" para descubrir información sobre servicios
+                  Terminal interactiva estilo Matrix donde &quot;hackeas&quot; para descubrir información sobre servicios
                 </p>
                 <div className="flex items-center gap-2 text-sm font-semibold">
                   <span>Explorar</span>
@@ -222,7 +222,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">El Chef Virtual</h3>
                 <p className="text-white/90 text-sm sm:text-base mb-4">
-                  Juego interactivo donde "cocinas" eligiendo ingredientes y recibes recomendaciones personalizadas
+                  Juego interactivo donde &quot;cocinas&quot; eligiendo ingredientes y recibes recomendaciones personalizadas
                 </p>
                 <div className="flex items-center gap-2 text-sm font-semibold">
                   <span>Explorar</span>
