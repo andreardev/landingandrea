@@ -77,26 +77,80 @@ export default function OlaServicioPage() {
         const endX = (zonaSeleccionada.coordenadas.x / 100) * canvas.width
         const endY = (zonaSeleccionada.coordenadas.y / 100) * canvas.height
 
+        // Línea base más visible
         ctx.beginPath()
         ctx.moveTo(startX, startY)
         ctx.lineTo(endX, endY)
-        ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)'
-        ctx.lineWidth = 2
-        ctx.setLineDash([5, 5])
+        
+        // Gradiente a lo largo de la línea
+        const gradient = ctx.createLinearGradient(startX, startY, endX, endY)
+        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.8)')
+        gradient.addColorStop(0.5, 'rgba(34, 211, 238, 0.9)')
+        gradient.addColorStop(1, 'rgba(59, 130, 246, 0.8)')
+        
+        ctx.strokeStyle = gradient
+        ctx.lineWidth = 8
+        ctx.lineCap = 'round'
+        ctx.shadowBlur = 15
+        ctx.shadowColor = 'rgba(34, 211, 238, 0.8)'
         ctx.stroke()
-        ctx.setLineDash([])
+        ctx.shadowBlur = 0
 
-        // Partículas de agua fluyendo
-        for (let i = 0; i < 5; i++) {
-          const progress = (frameCount % 60) / 60
-          const x = startX + (endX - startX) * progress
-          const y = startY + (endY - startY) * progress
+        // Línea brillante interior
+        ctx.beginPath()
+        ctx.moveTo(startX, startY)
+        ctx.lineTo(endX, endY)
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)'
+        ctx.lineWidth = 4
+        ctx.stroke()
 
+        // Múltiples partículas de agua fluyendo (chorro continuo)
+        for (let i = 0; i < 20; i++) {
+          const offset = (frameCount * 0.02 + i * 0.05) % 1
+          const x = startX + (endX - startX) * offset
+          const y = startY + (endY - startY) * offset
+
+          // Partícula principal
           ctx.beginPath()
-          ctx.arc(x, y, 3, 0, Math.PI * 2)
-          ctx.fillStyle = 'rgba(59, 130, 246, 0.8)'
+          ctx.arc(x, y, 6, 0, Math.PI * 2)
+          const particleGradient = ctx.createRadialGradient(x, y, 0, x, y, 6)
+          particleGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)')
+          particleGradient.addColorStop(0.5, 'rgba(34, 211, 238, 0.8)')
+          particleGradient.addColorStop(1, 'rgba(59, 130, 246, 0.6)')
+          ctx.fillStyle = particleGradient
+          ctx.fill()
+
+          // Brillo alrededor
+          ctx.beginPath()
+          ctx.arc(x, y, 10, 0, Math.PI * 2)
+          ctx.fillStyle = 'rgba(34, 211, 238, 0.3)'
           ctx.fill()
         }
+
+        // Gotas más pequeñas alrededor de la línea principal
+        for (let i = 0; i < 15; i++) {
+          const offset = (frameCount * 0.015 + i * 0.07) % 1
+          const x = startX + (endX - startX) * offset
+          const y = startY + (endY - startY) * offset
+          const randomOffset = (Math.sin(frameCount * 0.1 + i) * 8)
+
+          ctx.beginPath()
+          ctx.arc(x + randomOffset, y + randomOffset, 3, 0, Math.PI * 2)
+          ctx.fillStyle = 'rgba(34, 211, 238, 0.7)'
+          ctx.fill()
+        }
+
+        // Efecto de "salpicadura" en el destino
+        const splashRadius = 20 + Math.sin(frameCount * 0.2) * 5
+        ctx.beginPath()
+        ctx.arc(endX, endY, splashRadius, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(34, 211, 238, 0.4)'
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.arc(endX, endY, splashRadius * 0.6, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'
+        ctx.fill()
       }
 
       frameCount++
