@@ -227,6 +227,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80',
     preview: '/disenos/curso-landing-ia',
   },
+  {
+    id: 'gta-vi-lanzamiento',
+    nombre: 'GTA VI - Lanzamiento',
+    descripcion: 'Landing page disruptiva para el lanzamiento de GTA VI con estética urbana y cyberpunk. Incluye cuenta regresiva en tiempo real, 100 partículas de neón animadas, modal de trailer, sección de características épicas, mapa interactivo de Vice City, protagonistas del juego, opciones de pre-orden con 3 ediciones, diseño oscuro con gradientes neón (cyan, pink, yellow) y efectos visuales tipo poster de película.',
+    caracteristicas: ['Interactivo', 'Gaming', 'Neón', 'Cuenta Regresiva'],
+    color: 'from-cyan-500 to-pink-500',
+    imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80',
+    preview: '/disenos/gta-vi-lanzamiento',
+  },
 ]
 
 export default function DiseñosPage() {
