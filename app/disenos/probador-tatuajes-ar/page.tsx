@@ -18,6 +18,7 @@ interface Tatuaje {
 
 export default function ProbadorTatuajesARPage() {
   const [camaraActiva, setCamaraActiva] = useState(false)
+  const [videoListo, setVideoListo] = useState(false)
   const [tatuajeSeleccionado, setTatuajeSeleccionado] = useState<Tatuaje | null>(null)
   const [posicion, setPosicion] = useState({ x: 50, y: 50 })
   const [escala, setEscala] = useState(100)
@@ -99,6 +100,7 @@ export default function ProbadorTatuajesARPage() {
   const activarCamara = async () => {
     try {
       setCamaraActiva(true)
+      setVideoListo(false)
       setErrorCamara(null)
       
       const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -116,10 +118,17 @@ export default function ProbadorTatuajesARPage() {
         // Esperar a que el video esté listo
         videoRef.current.onloadedmetadata = () => {
           if (videoRef.current) {
-            videoRef.current.play().catch(err => {
+            videoRef.current.play().then(() => {
+              setVideoListo(true)
+            }).catch(err => {
               console.error('Error al reproducir video:', err)
             })
           }
+        }
+        
+        // También escuchar el evento playing para asegurar que está reproduciendo
+        videoRef.current.onplaying = () => {
+          setVideoListo(true)
         }
         
         // Scroll a la sección de la cámara después de un breve delay
@@ -133,6 +142,7 @@ export default function ProbadorTatuajesARPage() {
     } catch (error) {
       setErrorCamara('No se pudo acceder a la cámara. Por favor, permite el acceso.')
       setCamaraActiva(false)
+      setVideoListo(false)
       console.error('Error al acceder a la cámara:', error)
     }
   }
@@ -147,6 +157,8 @@ export default function ProbadorTatuajesARPage() {
       videoRef.current.srcObject = null
     }
     setCamaraActiva(false)
+    setVideoListo(false)
+    setTatuajeSeleccionado(null)
   }
 
   // Capturar foto
@@ -261,7 +273,7 @@ export default function ProbadorTatuajesARPage() {
                 />
                 
                 {/* Indicador de carga */}
-                {camaraActiva && (!videoRef.current || videoRef.current.readyState < 2) && (
+                {camaraActiva && !videoListo && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20">
                     <div className="text-center">
                       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
@@ -270,20 +282,10 @@ export default function ProbadorTatuajesARPage() {
                   </div>
                 )}
                 
-                {/* Mensaje si no hay video */}
-                {camaraActiva && videoRef.current && !videoRef.current.srcObject && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20">
-                    <div className="text-center">
-                      <Camera size={48} className="text-purple-400 mx-auto mb-4" />
-                      <p className="text-purple-300">Esperando señal de cámara...</p>
-                    </div>
-                  </div>
-                )}
-                
                 {/* Overlay del tatuaje */}
-                {tatuajeSeleccionado && (
+                {videoListo && tatuajeSeleccionado && (
                   <div
-                    className="absolute pointer-events-none z-10"
+                    className="absolute pointer-events-none z-30"
                     style={{
                       left: `${posicion.x}%`,
                       top: `${posicion.y}%`,
@@ -297,6 +299,8 @@ export default function ProbadorTatuajesARPage() {
                       className="max-w-xs opacity-90 drop-shadow-2xl"
                       style={{
                         filter: 'drop-shadow(0 0 20px rgba(168, 85, 247, 0.8))',
+                        width: '200px',
+                        height: 'auto',
                       }}
                     />
                   </div>
@@ -411,15 +415,26 @@ export default function ProbadorTatuajesARPage() {
               )}
 
               {/* Selector de tatuajes cuando la cámara está activa */}
-              {camaraActiva && !tatuajeSeleccionado && (
+              {camaraActiva && videoListo && (
                 <div className="mt-6">
-                  <h3 className="text-lg font-bold mb-4 text-center">Selecciona un diseño</h3>
+                  <h3 className="text-lg font-bold mb-4 text-center text-purple-300">
+                    {tatuajeSeleccionado ? 'Cambiar diseño' : 'Selecciona un diseño'}
+                  </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-h-64 overflow-y-auto">
                     {tatuajes.map((tatuaje) => (
                       <button
                         key={tatuaje.id}
-                        onClick={() => setTatuajeSeleccionado(tatuaje)}
-                        className="group bg-white/5 hover:bg-white/10 rounded-xl p-2 border-2 border-white/10 hover:border-purple-500/50 transition-all"
+                        onClick={() => {
+                          setTatuajeSeleccionado(tatuaje)
+                          setPosicion({ x: 50, y: 50 })
+                          setEscala(100)
+                          setRotacion(0)
+                        }}
+                        className={`group bg-white/5 hover:bg-white/10 rounded-xl p-2 border-2 transition-all ${
+                          tatuajeSeleccionado?.id === tatuaje.id 
+                            ? 'border-purple-500 bg-purple-500/20' 
+                            : 'border-white/10 hover:border-purple-500/50'
+                        }`}
                       >
                         <div className="aspect-square bg-gradient-to-br from-purple-900/50 to-pink-900/50 rounded-lg overflow-hidden mb-2">
                           <img
@@ -432,6 +447,13 @@ export default function ProbadorTatuajesARPage() {
                       </button>
                     ))}
                   </div>
+                </div>
+              )}
+              
+              {/* Mensaje si no hay tatuaje seleccionado */}
+              {camaraActiva && videoListo && !tatuajeSeleccionado && (
+                <div className="mt-4 text-center text-purple-300/70">
+                  <p>Selecciona un diseño de arriba para verlo en tiempo real sobre tu piel</p>
                 </div>
               )}
 
