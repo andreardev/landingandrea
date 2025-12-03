@@ -32,8 +32,8 @@ export default function ProbadorTatuajesARPage() {
   const tatuajes: Tatuaje[] = [
     {
       id: 1,
-      nombre: 'Dragón Tribal',
-      imagen: 'https://images.unsplash.com/photo-1605647540924-852290d6d5ee?w=400&q=80',
+      nombre: 'Calavera',
+      imagen: 'https://png.pngtree.com/png-vector/20241023/ourmid/pngtree-bird-chest-tattoo-png-image_13508215.png',
       categoria: 'Tribal',
       precio: '$500',
       artista: 'María García',
