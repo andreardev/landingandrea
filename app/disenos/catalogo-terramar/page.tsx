@@ -257,7 +257,7 @@ export default function CatalogoTerramarPage() {
     const mensaje = producto
       ? `Hola! Me interesa el producto: ${producto.nombre} - ${producto.precio}`
       : 'Hola! Me interesa conocer más sobre los productos Terramar'
-    const url = `https://wa.me/521234567890?text=${encodeURIComponent(mensaje)}`
+    const url = `https://wa.me/528126902979?text=${encodeURIComponent(mensaje)}`
     window.open(url, '_blank')
   }
 
@@ -451,7 +451,7 @@ export default function CatalogoTerramarPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="https://wa.me/521234567890"
+                  href="https://wa.me/528126902979"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl hover:shadow-green-500/50 transition-all transform hover:scale-105 active:scale-95"
