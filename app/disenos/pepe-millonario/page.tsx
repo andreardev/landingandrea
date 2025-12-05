@@ -226,7 +226,7 @@ export default function PepeMillonarioPage() {
         setTimeout(() => setMostrandoInfo(false), 3000)
       }
     }
-  }, [dineroGenerado, nivelActual])
+  }, [dineroGenerado, nivelActual, nivelesRiqueza])
 
   // Generar diamantes periódicamente
   useEffect(() => {
