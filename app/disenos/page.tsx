@@ -272,6 +272,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&q=80',
     preview: '/disenos/regalos-personalizados',
   },
+  {
+    id: 'chamarras-perfumes',
+    nombre: 'Chamarras y Perfumes - Experiencia Sensorial',
+    descripcion: 'Landing page disruptiva y sorprendente para negocio de chamarras y perfumes. Incluye efecto de "despertar" cinematográfico al cargar, probador virtual de clima interactivo (sol, lluvia, nieve, viento) con efectos visuales realistas en canvas, perfumero mágico donde al pasar el mouse se revelan fragancias con partículas animadas, partículas que siguen el movimiento del mouse, chamarras que se filtran según el clima seleccionado, diseño premium con gradientes oscuros y efectos visuales únicos que generan un impacto visual inmediato.',
+    caracteristicas: ['Interactivo', 'Clima', 'Sensorial', 'Premium'],
+    color: 'from-indigo-600 to-purple-600',
+    imagen: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80',
+    preview: '/disenos/chamarras-perfumes',
+  },
 ]
 
 export default function DiseñosPage() {
