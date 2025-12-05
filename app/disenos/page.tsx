@@ -299,6 +299,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=80',
     preview: '/disenos/pepe-millonario',
   },
+  {
+    id: 'pollos-las-ranitas',
+    nombre: 'Pollos Las Ranitas',
+    descripcion: 'Landing page disruptiva para Pollos Las Ranitas con ranitas saltando interactivas. Incluye ranitas animadas en canvas que saltan con física realista, sistema de clic en ranitas para revelar información y promociones, promoción destacada de 1 kilo de tortillas gratis hechas a mano, servicio a domicilio sin costo extra, catálogo de productos (pollo entero, medio, cuarto, deshebrado, con papas), botones de WhatsApp directos con número 4433646336, efectos visuales verdes/emerald, diseño temático con ranitas y pollos, y experiencia completamente interactiva y divertida.',
+    caracteristicas: ['Interactivo', 'Ranitas', 'Comida', 'Divertido'],
+    color: 'from-green-600 to-emerald-600',
+    imagen: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=800&q=80',
+    preview: '/disenos/pollos-las-ranitas',
+  },
 ]
 
 export default function DiseñosPage() {
