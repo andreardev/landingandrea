@@ -25,6 +25,7 @@ interface Producto {
 
 export default function PollosLasRanitasPage() {
   const [ranitas, setRanitas] = useState<Ranita[]>([])
+  const [ranitasPosiciones, setRanitasPosiciones] = useState<Array<{ id: number; x: number; y: number }>>([])
   const [ranitaSeleccionada, setRanitaSeleccionada] = useState<number | null>(null)
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null)
   const [pedidoRealizado, setPedidoRealizado] = useState(false)
@@ -74,15 +75,15 @@ export default function PollosLasRanitasPage() {
   // Crear ranitas saltando
   useEffect(() => {
     const nuevasRanitas: Ranita[] = []
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 6; i++) {
       nuevasRanitas.push({
         id: i,
-        x: Math.random() * (window.innerWidth || 800),
-        y: Math.random() * (window.innerHeight || 600) + 200,
-        velocidadX: (Math.random() - 0.5) * 2,
-        velocidadY: -Math.random() * 3 - 2,
-        saltando: false,
-        vida: 300,
+        x: Math.random() * (window.innerWidth || 800) * 0.8 + (window.innerWidth || 800) * 0.1,
+        y: (window.innerHeight || 600) - 100,
+        velocidadX: (Math.random() - 0.5) * 1.5,
+        velocidadY: -Math.random() * 4 - 3,
+        saltando: true,
+        vida: 400,
         revelada: false,
       })
     }
@@ -114,10 +115,10 @@ export default function PollosLasRanitasPage() {
             ranita.vida--
 
             // Rebote en el suelo
-            if (ranita.y > canvas.height - 50) {
-              ranita.y = canvas.height - 50
-              ranita.velocidadY = -Math.random() * 3 - 2
-              ranita.velocidadX = (Math.random() - 0.5) * 2
+            if (ranita.y > canvas.height - 100) {
+              ranita.y = canvas.height - 100
+              ranita.velocidadY = -Math.random() * 4 - 3
+              ranita.velocidadX = (Math.random() - 0.5) * 1.5
             }
 
             // Rebote en las paredes
@@ -128,50 +129,78 @@ export default function PollosLasRanitasPage() {
             if (ranita.vida > 0) {
               nuevasRanitas.push(ranita)
 
-              // Dibujar ranita
+              // Dibujar ranita más grande y visible
               ctx.save()
               ctx.translate(ranita.x, ranita.y)
-              ctx.fillStyle = '#4ade80'
+              // Sombra
+              ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'
               ctx.beginPath()
-              ctx.arc(0, 0, 15, 0, Math.PI * 2)
+              ctx.ellipse(0, 25, 20, 8, 0, 0, Math.PI * 2)
               ctx.fill()
-              // Ojos
+              // Cuerpo principal
+              ctx.fillStyle = '#22c55e'
+              ctx.beginPath()
+              ctx.arc(0, 0, 30, 0, Math.PI * 2)
+              ctx.fill()
+              // Borde brillante
+              ctx.strokeStyle = '#4ade80'
+              ctx.lineWidth = 3
+              ctx.stroke()
+              // Ojos grandes
+              ctx.fillStyle = '#fff'
+              ctx.beginPath()
+              ctx.arc(-10, -8, 8, 0, Math.PI * 2)
+              ctx.arc(10, -8, 8, 0, Math.PI * 2)
+              ctx.fill()
               ctx.fillStyle = '#000'
               ctx.beginPath()
-              ctx.arc(-5, -5, 2, 0, Math.PI * 2)
-              ctx.arc(5, -5, 2, 0, Math.PI * 2)
+              ctx.arc(-10, -8, 5, 0, Math.PI * 2)
+              ctx.arc(10, -8, 5, 0, Math.PI * 2)
               ctx.fill()
+              // Brillo en los ojos
+              ctx.fillStyle = '#fff'
+              ctx.beginPath()
+              ctx.arc(-8, -10, 2, 0, Math.PI * 2)
+              ctx.arc(12, -10, 2, 0, Math.PI * 2)
+              ctx.fill()
+              // Boca
+              ctx.strokeStyle = '#000'
+              ctx.lineWidth = 2
+              ctx.beginPath()
+              ctx.arc(0, 5, 8, 0, Math.PI)
+              ctx.stroke()
               ctx.restore()
             } else {
               // Reiniciar ranita
               nuevasRanitas.push({
                 ...ranita,
-                x: Math.random() * canvas.width,
-                y: canvas.height - 50,
-                velocidadY: -Math.random() * 3 - 2,
+                x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
+                y: canvas.height - 100,
+                velocidadY: -Math.random() * 4 - 3,
+                velocidadX: (Math.random() - 0.5) * 1.5,
                 saltando: true,
-                vida: 300,
+                vida: 400,
                 revelada: false,
               })
             }
           } else {
-            // Ranita esperando
-            nuevasRanitas.push(ranita)
-            ctx.save()
-            ctx.translate(ranita.x, ranita.y)
-            ctx.fillStyle = '#4ade80'
-            ctx.beginPath()
-            ctx.arc(0, 0, 15, 0, Math.PI * 2)
-            ctx.fill()
-            // Ojos
-            ctx.fillStyle = '#000'
-            ctx.beginPath()
-            ctx.arc(-5, -5, 2, 0, Math.PI * 2)
-            ctx.arc(5, -5, 2, 0, Math.PI * 2)
-            ctx.fill()
-            ctx.restore()
+            // Ranita esperando - hacer que salte automáticamente
+            nuevasRanitas.push({
+              ...ranita,
+              saltando: true,
+              velocidadY: -Math.random() * 4 - 3,
+            })
           }
         })
+        // Actualizar posiciones para los botones clickeables
+        setRanitasPosiciones(
+          nuevasRanitas.map((r) => ({
+            id: r.id,
+            x: r.x,
+            y: r.y,
+          }))
+        )
+
         return nuevasRanitas
       })
 
@@ -226,6 +255,36 @@ export default function PollosLasRanitasPage() {
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0"
       />
+
+      {/* Elementos clickeables de ranitas */}
+      <div className="absolute inset-0 w-full h-full pointer-events-auto z-5">
+        {ranitasPosiciones.map((pos) => {
+          const ranita = ranitas.find((r) => r.id === pos.id)
+          if (!ranita) return null
+          return (
+            <button
+              key={pos.id}
+              onClick={() => hacerSaltarRanita(pos.id)}
+              className="absolute transition-all duration-100 hover:scale-110 active:scale-95 cursor-pointer group"
+              style={{
+                left: `${pos.x - 50}px`,
+                top: `${pos.y - 50}px`,
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                background: 'rgba(34, 197, 94, 0.2)',
+                border: '3px solid rgba(74, 222, 128, 0.5)',
+                boxShadow: '0 0 20px rgba(74, 222, 128, 0.5)',
+              }}
+              aria-label="Haz clic en la ranita"
+            >
+              <span className="absolute inset-0 flex items-center justify-center text-4xl opacity-0 group-hover:opacity-100 transition-opacity">
+                🐸
+              </span>
+            </button>
+          )
+        })}
+      </div>
 
       {/* Efectos de fondo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
