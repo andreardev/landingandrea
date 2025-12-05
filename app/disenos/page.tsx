@@ -254,6 +254,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=800&q=80',
     preview: '/disenos/pino-navideno',
   },
+  {
+    id: 'catalogo-terramar',
+    nombre: 'Catálogo Terramar - Belleza',
+    descripcion: 'Landing page disruptiva tipo catálogo interactivo para vendedora de productos de belleza Terramar. Incluye catálogo tipo revista con páginas que se pueden hojear, partículas brillantes animadas en canvas, productos organizados por categorías (Maquillaje, Cuidado Facial, Cuidado Corporal, Fragancias), sistema de descuentos y productos destacados, modal de producto detallado, botones de WhatsApp para contacto directo, diseño elegante con gradientes rosa/púrpura y efectos de glamour.',
+    caracteristicas: ['Catálogo', 'Interactivo', 'Belleza', 'Glamour'],
+    color: 'from-pink-500 to-purple-600',
+    imagen: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80',
+    preview: '/disenos/catalogo-terramar',
+  },
 ]
 
 export default function DiseñosPage() {
