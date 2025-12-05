@@ -1,18 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Phone, ShoppingCart, Gift, Truck, Sparkles, Zap, Star, CheckCircle2 } from 'lucide-react'
-
-interface Ranita {
-  id: number
-  x: number
-  y: number
-  velocidadX: number
-  velocidadY: number
-  saltando: boolean
-  vida: number
-  revelada: boolean
-}
+import { Phone, ShoppingCart, Gift, Truck, Sparkles, Zap, Star, CheckCircle2, Hand } from 'lucide-react'
 
 interface Producto {
   id: number
@@ -24,13 +13,13 @@ interface Producto {
 }
 
 export default function PollosLasRanitasPage() {
-  const [ranitas, setRanitas] = useState<Ranita[]>([])
-  const [ranitasPosiciones, setRanitasPosiciones] = useState<Array<{ id: number; x: number; y: number }>>([])
-  const [ranitaSeleccionada, setRanitaSeleccionada] = useState<number | null>(null)
+  const [porcentajeRascado, setPorcentajeRascado] = useState(0)
+  const [promocionRevelada, setPromocionRevelada] = useState(false)
+  const [rascando, setRascando] = useState(false)
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null)
   const [pedidoRealizado, setPedidoRealizado] = useState(false)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationFrameRef = useRef<number>()
+  const scratchCanvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const productos: Producto[] = [
     {
@@ -72,165 +61,159 @@ export default function PollosLasRanitasPage() {
     },
   ]
 
-  // Crear ranitas saltando
+  // Sistema de raspa y gana
   useEffect(() => {
-    const nuevasRanitas: Ranita[] = []
-    for (let i = 0; i < 6; i++) {
-      nuevasRanitas.push({
-        id: i,
-        x: Math.random() * (window.innerWidth || 800) * 0.8 + (window.innerWidth || 800) * 0.1,
-        y: (window.innerHeight || 600) - 100,
-        velocidadX: (Math.random() - 0.5) * 1.5,
-        velocidadY: -Math.random() * 4 - 3,
-        saltando: true,
-        vida: 400,
-        revelada: false,
-      })
-    }
-    setRanitas(nuevasRanitas)
-  }, [])
+    if (!scratchCanvasRef.current || !containerRef.current) return
 
-  // Animar ranitas en canvas
-  useEffect(() => {
-    if (!canvasRef.current) return
-
-    const canvas = canvasRef.current
+    const canvas = scratchCanvasRef.current
+    const container = containerRef.current
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    const rect = container.getBoundingClientRect()
+    canvas.width = rect.width
+    canvas.height = rect.height
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+    // Dibujar capa de rascar (gris con patrón)
+    const drawScratchLayer = () => {
+      ctx.fillStyle = '#6b7280'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      setRanitas((prevRanitas) => {
-        const nuevasRanitas: Ranita[] = []
-        prevRanitas.forEach((ranita) => {
-          // Física de salto
-          if (ranita.saltando) {
-            ranita.y += ranita.velocidadY
-            ranita.x += ranita.velocidadX
-            ranita.velocidadY += 0.15 // Gravedad
-            ranita.vida--
+      // Patrón de texto
+      ctx.fillStyle = '#9ca3af'
+      ctx.font = 'bold 24px Arial'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      for (let y = 0; y < canvas.height; y += 40) {
+        for (let x = 0; x < canvas.width; x += 200) {
+          ctx.fillText('🐸 RASPA AQUÍ 🐸', x + 100, y + 20)
+        }
+      }
 
-            // Rebote en el suelo
-            if (ranita.y > canvas.height - 100) {
-              ranita.y = canvas.height - 100
-              ranita.velocidadY = -Math.random() * 4 - 3
-              ranita.velocidadX = (Math.random() - 0.5) * 1.5
-            }
-
-            // Rebote en las paredes
-            if (ranita.x < 0 || ranita.x > canvas.width) {
-              ranita.velocidadX *= -1
-            }
-
-            if (ranita.vida > 0) {
-              nuevasRanitas.push(ranita)
-
-              // Dibujar ranita más grande y visible
-              ctx.save()
-              ctx.translate(ranita.x, ranita.y)
-              // Sombra
-              ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'
-              ctx.beginPath()
-              ctx.ellipse(0, 25, 20, 8, 0, 0, Math.PI * 2)
-              ctx.fill()
-              // Cuerpo principal
-              ctx.fillStyle = '#22c55e'
-              ctx.beginPath()
-              ctx.arc(0, 0, 30, 0, Math.PI * 2)
-              ctx.fill()
-              // Borde brillante
-              ctx.strokeStyle = '#4ade80'
-              ctx.lineWidth = 3
-              ctx.stroke()
-              // Ojos grandes
-              ctx.fillStyle = '#fff'
-              ctx.beginPath()
-              ctx.arc(-10, -8, 8, 0, Math.PI * 2)
-              ctx.arc(10, -8, 8, 0, Math.PI * 2)
-              ctx.fill()
-              ctx.fillStyle = '#000'
-              ctx.beginPath()
-              ctx.arc(-10, -8, 5, 0, Math.PI * 2)
-              ctx.arc(10, -8, 5, 0, Math.PI * 2)
-              ctx.fill()
-              // Brillo en los ojos
-              ctx.fillStyle = '#fff'
-              ctx.beginPath()
-              ctx.arc(-8, -10, 2, 0, Math.PI * 2)
-              ctx.arc(12, -10, 2, 0, Math.PI * 2)
-              ctx.fill()
-              // Boca
-              ctx.strokeStyle = '#000'
-              ctx.lineWidth = 2
-              ctx.beginPath()
-              ctx.arc(0, 5, 8, 0, Math.PI)
-              ctx.stroke()
-              ctx.restore()
-            } else {
-              // Reiniciar ranita
-              nuevasRanitas.push({
-                ...ranita,
-                x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
-                y: canvas.height - 100,
-                velocidadY: -Math.random() * 4 - 3,
-                velocidadX: (Math.random() - 0.5) * 1.5,
-                saltando: true,
-                vida: 400,
-                revelada: false,
-              })
-            }
-          } else {
-            // Ranita esperando - hacer que salte automáticamente
-            nuevasRanitas.push({
-              ...ranita,
-              saltando: true,
-              velocidadY: -Math.random() * 4 - 3,
-            })
-          }
-        })
-        // Actualizar posiciones para los botones clickeables
-        setRanitasPosiciones(
-          nuevasRanitas.map((r) => ({
-            id: r.id,
-            x: r.x,
-            y: r.y,
-          }))
-        )
-
-        return nuevasRanitas
-      })
-
-      animationFrameRef.current = requestAnimationFrame(animate)
+      // Patrón de líneas
+      ctx.strokeStyle = '#4b5563'
+      ctx.lineWidth = 2
+      for (let i = 0; i < canvas.width; i += 30) {
+        ctx.beginPath()
+        ctx.moveTo(i, 0)
+        ctx.lineTo(i, canvas.height)
+        ctx.stroke()
+      }
+      for (let i = 0; i < canvas.height; i += 30) {
+        ctx.beginPath()
+        ctx.moveTo(0, i)
+        ctx.lineTo(canvas.width, i)
+        ctx.stroke()
+      }
     }
 
-    animate()
+    drawScratchLayer()
+
+    let isDrawing = false
+    const pixelsRascados = new Set<string>()
+
+    const getPixelKey = (x: number, y: number) => `${Math.floor(x)},${Math.floor(y)}`
+
+    const rascar = (x: number, y: number) => {
+      const rect = canvas.getBoundingClientRect()
+      const canvasX = x - rect.left
+      const canvasY = y - rect.top
+
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.beginPath()
+      ctx.arc(canvasX, canvasY, 30, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Contar píxeles rascados
+      for (let dx = -30; dx <= 30; dx++) {
+        for (let dy = -30; dy <= 30; dy++) {
+          if (dx * dx + dy * dy <= 30 * 30) {
+            const px = Math.floor(canvasX + dx)
+            const py = Math.floor(canvasY + dy)
+            if (px >= 0 && px < canvas.width && py >= 0 && py < canvas.height) {
+              pixelsRascados.add(getPixelKey(px, py))
+            }
+          }
+        }
+      }
+
+      const totalPixels = canvas.width * canvas.height
+      const porcentaje = (pixelsRascados.size / totalPixels) * 100
+      setPorcentajeRascado(Math.min(100, porcentaje))
+
+      if (porcentaje > 30 && !promocionRevelada) {
+        setPromocionRevelada(true)
+      }
+    }
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDrawing = true
+      setRascando(true)
+      rascar(e.clientX, e.clientY)
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isDrawing) {
+        rascar(e.clientX, e.clientY)
+      }
+    }
+
+    const handleMouseUp = () => {
+      isDrawing = false
+      setRascando(false)
+    }
+
+    const handleTouchStart = (e: TouchEvent) => {
+      e.preventDefault()
+      isDrawing = true
+      setRascando(true)
+      const touch = e.touches[0]
+      rascar(touch.clientX, touch.clientY)
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault()
+      if (isDrawing && e.touches[0]) {
+        const touch = e.touches[0]
+        rascar(touch.clientX, touch.clientY)
+      }
+    }
+
+    const handleTouchEnd = () => {
+      isDrawing = false
+      setRascando(false)
+    }
+
+    canvas.addEventListener('mousedown', handleMouseDown)
+    canvas.addEventListener('mousemove', handleMouseMove)
+    canvas.addEventListener('mouseup', handleMouseUp)
+    canvas.addEventListener('mouseleave', handleMouseUp)
+    canvas.addEventListener('touchstart', handleTouchStart)
+    canvas.addEventListener('touchmove', handleTouchMove)
+    canvas.addEventListener('touchend', handleTouchEnd)
 
     const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      const rect = container.getBoundingClientRect()
+      canvas.width = rect.width
+      canvas.height = rect.height
+      drawScratchLayer()
+      pixelsRascados.clear()
+      setPorcentajeRascado(0)
     }
 
     window.addEventListener('resize', handleResize)
 
     return () => {
+      canvas.removeEventListener('mousedown', handleMouseDown)
+      canvas.removeEventListener('mousemove', handleMouseMove)
+      canvas.removeEventListener('mouseup', handleMouseUp)
+      canvas.removeEventListener('mouseleave', handleMouseUp)
+      canvas.removeEventListener('touchstart', handleTouchStart)
+      canvas.removeEventListener('touchmove', handleTouchMove)
+      canvas.removeEventListener('touchend', handleTouchEnd)
       window.removeEventListener('resize', handleResize)
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
     }
-  }, [])
-
-  const hacerSaltarRanita = (id: number) => {
-    setRanitas((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, saltando: true, revelada: true } : r))
-    )
-    setRanitaSeleccionada(id)
-    setTimeout(() => setRanitaSeleccionada(null), 2000)
-  }
+  }, [promocionRevelada])
 
   const contactarWhatsApp = (producto?: Producto) => {
     const mensaje = producto
@@ -250,41 +233,6 @@ export default function PollosLasRanitasPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-900 via-emerald-900 to-green-800 relative overflow-hidden">
-      {/* Canvas para ranitas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-0"
-      />
-
-      {/* Elementos clickeables de ranitas */}
-      <div className="absolute inset-0 w-full h-full pointer-events-auto z-5">
-        {ranitasPosiciones.map((pos) => {
-          const ranita = ranitas.find((r) => r.id === pos.id)
-          if (!ranita) return null
-          return (
-            <button
-              key={pos.id}
-              onClick={() => hacerSaltarRanita(pos.id)}
-              className="absolute transition-all duration-100 hover:scale-110 active:scale-95 cursor-pointer group"
-              style={{
-                left: `${pos.x - 50}px`,
-                top: `${pos.y - 50}px`,
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
-                background: 'rgba(34, 197, 94, 0.2)',
-                border: '3px solid rgba(74, 222, 128, 0.5)',
-                boxShadow: '0 0 20px rgba(74, 222, 128, 0.5)',
-              }}
-              aria-label="Haz clic en la ranita"
-            >
-              <span className="absolute inset-0 flex items-center justify-center text-4xl opacity-0 group-hover:opacity-100 transition-opacity">
-                🐸
-              </span>
-            </button>
-          )
-        })}
-      </div>
 
       {/* Efectos de fondo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -322,7 +270,7 @@ export default function PollosLasRanitasPage() {
               </span>
             </h1>
             <p className="text-2xl sm:text-3xl text-green-100 mb-8">
-              Haz clic en las ranitas para descubrir nuestras promociones
+              ¡Raspa y descubre tu promoción especial!
             </p>
           </div>
         </section>
@@ -355,17 +303,54 @@ export default function PollosLasRanitasPage() {
           </div>
         </section>
 
-        {/* Instrucción Interactiva */}
+        {/* Sistema Raspa y Gana */}
         <section className="py-8 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border-2 border-green-400/30">
-              <Zap size={48} className="mx-auto mb-4 text-yellow-300" />
-              <p className="text-xl text-white mb-4">
-                ¡Haz clic en las ranitas que saltan para descubrir información especial!
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border-2 border-green-400/30 text-center mb-6">
+              <Hand size={48} className="mx-auto mb-4 text-yellow-300 animate-pulse" />
+              <p className="text-xl text-white mb-2">
+                🎁 ¡Raspa con tu mouse o dedo para revelar tu promoción!
               </p>
               <p className="text-lg text-green-200">
-                Cada ranita tiene algo que contarte sobre nuestros deliciosos pollos
+                {porcentajeRascado < 30
+                  ? `Rascado: ${Math.round(porcentajeRascado)}% - ¡Sigue raspando!`
+                  : '¡Promoción revelada!'}
               </p>
+            </div>
+
+            <div
+              ref={containerRef}
+              className="relative bg-gradient-to-br from-yellow-500/20 to-amber-500/20 rounded-2xl overflow-hidden border-2 border-yellow-400/50"
+              style={{ minHeight: '300px' }}
+            >
+              {/* Contenido de la promoción (debajo de la capa de rascar) */}
+              <div className="absolute inset-0 flex items-center justify-center p-8 z-0">
+                <div className="text-center">
+                  <Gift size={64} className="mx-auto mb-4 text-yellow-300 animate-bounce" />
+                  <h3 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+                    🎉 ¡FELICIDADES! 🎉
+                  </h3>
+                  <p className="text-2xl sm:text-3xl text-white mb-2">
+                    Has ganado:
+                  </p>
+                  <p className="text-3xl sm:text-4xl font-bold text-yellow-300 mb-4">
+                    1 Kilo de Tortillas GRATIS
+                  </p>
+                  <p className="text-xl text-white/90 mb-2">
+                    ✨ Hechas a mano
+                  </p>
+                  <p className="text-xl text-white/90">
+                    🚚 Con tu compra de pollo
+                  </p>
+                </div>
+              </div>
+
+              {/* Canvas de rascar */}
+              <canvas
+                ref={scratchCanvasRef}
+                className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing z-10"
+                style={{ touchAction: 'none' }}
+              />
             </div>
           </div>
         </section>
@@ -523,12 +508,12 @@ export default function PollosLasRanitasPage() {
         </div>
       )}
 
-      {/* Notificación de Ranita */}
-      {ranitaSeleccionada !== null && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-xl shadow-2xl animate-pulse">
+      {/* Notificación de Promoción Revelada */}
+      {promocionRevelada && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-xl shadow-2xl animate-pulse">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">🐸</span>
-            <span>¡Ribbit! Recuerda: 1 kilo de tortillas gratis con tu pollo</span>
+            <Gift size={32} />
+            <span>¡Promoción revelada! 1 kilo de tortillas gratis con tu pollo</span>
           </div>
         </div>
       )}
