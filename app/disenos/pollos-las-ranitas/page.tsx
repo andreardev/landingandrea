@@ -275,34 +275,6 @@ export default function PollosLasRanitasPage() {
           </div>
         </section>
 
-        {/* Promoción Destacada */}
-        <section className="py-8 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-yellow-500/30 to-amber-500/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-yellow-400/50 relative overflow-hidden">
-              <div className="absolute top-4 right-4">
-                <Gift size={48} className="text-yellow-300 animate-bounce" />
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-                  🎉 Promoción Especial 🎉
-                </h2>
-                <p className="text-2xl sm:text-3xl text-white mb-2">
-                  Al comprar tu pollo, recibe
-                </p>
-                <p className="text-3xl sm:text-4xl font-bold text-yellow-300 mb-4">
-                  1 Kilo de Tortillas GRATIS
-                </p>
-                <p className="text-xl text-white/90 mb-2">
-                  ✨ Hechas a mano
-                </p>
-                <p className="text-xl text-white/90">
-                  🚚 Servicio a domicilio SIN COSTO EXTRA
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Sistema Raspa y Gana */}
         <section className="py-8 px-4">
           <div className="max-w-4xl mx-auto">
