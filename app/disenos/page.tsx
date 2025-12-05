@@ -281,6 +281,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80',
     preview: '/disenos/chamarras-perfumes',
   },
+  {
+    id: 'ropa-zapatillas',
+    nombre: 'Ropa y Zapatillas - Estilo que Define',
+    descripcion: 'Landing page disruptiva adaptada para negocio de ropa y zapatillas. Incluye efecto de "despertar" cinematográfico al cargar, probador virtual de estilos interactivo (casual, formal, deportivo, elegante) con efectos visuales de partículas en canvas que cambian según el estilo, galería mágica de zapatillas donde al pasar el mouse se revelan efectos con partículas animadas, partículas que siguen el movimiento del mouse, ropa que se filtra según el estilo seleccionado, información de tallas y colores disponibles, diseño premium con gradientes oscuros y efectos visuales únicos que generan un impacto visual inmediato.',
+    caracteristicas: ['Interactivo', 'Estilos', 'Moda', 'Premium'],
+    color: 'from-pink-600 to-purple-600',
+    imagen: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&q=80',
+    preview: '/disenos/ropa-zapatillas',
+  },
 ]
 
 export default function DiseñosPage() {
