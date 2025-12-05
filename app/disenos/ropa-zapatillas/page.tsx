@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Shirt, Briefcase, Activity, Crown, Sparkles, Phone, ShoppingBag, X, Zap, Shoe } from 'lucide-react'
+import { Shirt, Briefcase, Activity, Crown, Sparkles, Phone, ShoppingBag, X, Zap, Footprints } from 'lucide-react'
 
 interface Producto {
   id: number
@@ -527,7 +527,7 @@ export default function RopaZapatillasPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       {zapatillaHover === zapatilla.id && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <Shoe size={64} className="text-pink-300 animate-pulse" />
+                          <Footprints size={64} className="text-pink-300 animate-pulse" />
                         </div>
                       )}
                     </div>
