@@ -263,6 +263,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80',
     preview: '/disenos/catalogo-terramar',
   },
+  {
+    id: 'regalos-personalizados',
+    nombre: 'Regalos Personalizados',
+    descripcion: 'Landing page disruptiva para negocio de regalos personalizados (rompecabezas, cuadros, fotos Polaroid). Incluye rompecabezas interactivo que se arma al hacer clic en las piezas, galería de fotos Polaroid que se puede hojear, productos organizados por categorías, partículas animadas en canvas, modal de producto detallado, botones de WhatsApp para contacto directo, diseño creativo con gradientes púrpura/rosa y efectos visuales únicos.',
+    caracteristicas: ['Interactivo', 'Rompecabezas', 'Polaroid', 'Personalizado'],
+    color: 'from-purple-600 to-pink-600',
+    imagen: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&q=80',
+    preview: '/disenos/regalos-personalizados',
+  },
 ]
 
 export default function DiseñosPage() {
