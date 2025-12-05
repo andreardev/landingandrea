@@ -245,6 +245,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1605647540924-852290d6d5ee?w=800&q=80',
     preview: '/disenos/probador-tatuajes-ar',
   },
+  {
+    id: 'pino-navideno',
+    nombre: 'Pino Navideño Interactivo',
+    descripcion: 'Landing page mágica y navideña para negocio de pinos navideños con árbol interactivo que se decora progresivamente al hacer clic. Incluye efectos de nieve cayendo en canvas, luces parpadeantes, estrellas brillantes, bolas de colores, regalos animados, sistema de niveles de decoración, información de productos y servicios, diseño navideño con gradientes azul/verde/rojo y experiencia inmersiva de Navidad.',
+    caracteristicas: ['Interactivo', 'Navideño', 'Animado', 'Mágico'],
+    color: 'from-green-600 to-red-600',
+    imagen: 'https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=800&q=80',
+    preview: '/disenos/pino-navideno',
+  },
 ]
 
 export default function DiseñosPage() {
