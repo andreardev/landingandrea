@@ -290,6 +290,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&q=80',
     preview: '/disenos/ropa-zapatillas',
   },
+  {
+    id: 'pepe-millonario',
+    nombre: 'Pepe Millonario - Máquina de Dinero',
+    descripcion: 'Landing page disruptiva única para Pepe Millonario con máquina de dinero interactiva completamente nueva. Incluye sistema de generación de dinero al hacer clic, billetes que caen con física realista en canvas (valores de $20, $50, $100), diamantes que aparecen aleatoriamente, contador de dinero en tiempo real, sistema de niveles de riqueza gamificado (6 niveles: Iniciante, Ahorrador, Inversionista, Millionario, Magnate, Leyenda), barra de progreso hacia el siguiente nivel, botón de activación automática de la máquina, efectos visuales dorados y de lujo, notificaciones al alcanzar nuevos niveles, diseño premium con gradientes dorados/ámbar y experiencia completamente interactiva y gamificada.',
+    caracteristicas: ['Interactivo', 'Gamificado', 'Dinero', 'Único'],
+    color: 'from-yellow-600 to-amber-600',
+    imagen: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=80',
+    preview: '/disenos/pepe-millonario',
+  },
 ]
 
 export default function DiseñosPage() {
