@@ -47,30 +47,43 @@ export default function InvitacionRobloxCumpleanosPage() {
 
   // Generar personajes Roblox
   useEffect(() => {
-    if (!edadSeleccionada || !juegoActivo) return
-
-    const nuevosPersonajes: RobloxCharacter[] = []
-    const cantidad = edadSeleccionada === 7 ? 15 : 10
-
-    for (let i = 0; i < cantidad; i++) {
-      nuevosPersonajes.push({
-        id: i,
-        x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-        y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        color: coloresRoblox[Math.floor(Math.random() * coloresRoblox.length)],
-        size: 30 + Math.random() * 40,
-        rotation: Math.random() * 360,
-        rotationSpeed: (Math.random() - 0.5) * 5,
-      })
+    if (!edadSeleccionada || !juegoActivo) {
+      setPersonajes([])
+      return
     }
-    setPersonajes(nuevosPersonajes)
+
+    // Esperar un momento para que el canvas esté listo
+    const timer = setTimeout(() => {
+      const nuevosPersonajes: RobloxCharacter[] = []
+      const cantidad = edadSeleccionada === 7 ? 20 : 15
+
+      for (let i = 0; i < cantidad; i++) {
+        nuevosPersonajes.push({
+          id: Date.now() + i,
+          x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
+          y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3,
+          color: coloresRoblox[Math.floor(Math.random() * coloresRoblox.length)],
+          size: 60 + Math.random() * 60, // Personajes más grandes (60-120px)
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 8,
+        })
+      }
+      setPersonajes(nuevosPersonajes)
+    }, 100)
+
+    return () => clearTimeout(timer)
   }, [edadSeleccionada, juegoActivo])
 
   // Animación de personajes
   useEffect(() => {
-    if (!juegoActivo || !canvasRef.current) return
+    if (!juegoActivo || !canvasRef.current) {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
+      return
+    }
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
@@ -79,13 +92,22 @@ export default function InvitacionRobloxCumpleanosPage() {
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
+      // Forzar repintado después de redimensionar
+      if (personajes.length > 0) {
+        setPersonajes((prev) => [...prev])
+      }
     }
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
+    let animationId: number
+
     const animate = () => {
+      if (!canvas || !ctx) return
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+      // Actualizar y dibujar personajes
       setPersonajes((prev) =>
         prev.map((p) => {
           let newX = p.x + p.vx
@@ -95,11 +117,11 @@ export default function InvitacionRobloxCumpleanosPage() {
 
           // Rebotes en los bordes
           if (newX <= p.size / 2 || newX >= canvas.width - p.size / 2) {
-            newVx = -newVx
+            newVx = -newVx * 0.9 // Reducir velocidad ligeramente
             newX = Math.max(p.size / 2, Math.min(canvas.width - p.size / 2, newX))
           }
           if (newY <= p.size / 2 || newY >= canvas.height - p.size / 2) {
-            newVy = -newVy
+            newVy = -newVy * 0.9
             newY = Math.max(p.size / 2, Math.min(canvas.height - p.size / 2, newY))
           }
 
@@ -110,31 +132,45 @@ export default function InvitacionRobloxCumpleanosPage() {
           ctx.translate(newX, newY)
           ctx.rotate((newRotation * Math.PI) / 180)
 
-          // Cuerpo (bloque principal)
-          ctx.fillStyle = p.color
+          // Borde exterior para mejor visibilidad
+          ctx.strokeStyle = '#FFFFFF'
+          ctx.lineWidth = 4
+          ctx.strokeRect(-p.size / 2 - 2, -p.size / 2 - 2, p.size + 4, p.size + 4)
+
+          // Sombra para efecto 3D (antes del cuerpo)
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'
+          ctx.fillRect(-p.size / 2 + 3, p.size / 2 - 3, p.size, 8)
+
+          // Cuerpo (bloque principal) con gradiente
+          const gradient = ctx.createLinearGradient(-p.size / 2, -p.size / 2, p.size / 2, p.size / 2)
+          gradient.addColorStop(0, p.color)
+          gradient.addColorStop(1, p.color + 'CC')
+          ctx.fillStyle = gradient
           ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size)
 
-          // Sombra para efecto 3D
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'
-          ctx.fillRect(-p.size / 2, p.size / 2 - 5, p.size, 5)
+          // Borde interno
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'
+          ctx.lineWidth = 2
+          ctx.strokeRect(-p.size / 2, -p.size / 2, p.size, p.size)
 
-          // Ojos
+          // Ojos más grandes y visibles
           ctx.fillStyle = '#FFFFFF'
-          const eyeSize = p.size * 0.15
-          ctx.fillRect(-p.size * 0.25, -p.size * 0.2, eyeSize, eyeSize)
-          ctx.fillRect(p.size * 0.25 - eyeSize, -p.size * 0.2, eyeSize, eyeSize)
+          const eyeSize = p.size * 0.2
+          const eyeY = -p.size * 0.15
+          ctx.fillRect(-p.size * 0.3, eyeY, eyeSize, eyeSize)
+          ctx.fillRect(p.size * 0.3 - eyeSize, eyeY, eyeSize, eyeSize)
 
           // Pupilas
           ctx.fillStyle = '#000000'
-          const pupilSize = eyeSize * 0.5
-          ctx.fillRect(-p.size * 0.25 + eyeSize * 0.25, -p.size * 0.2 + eyeSize * 0.25, pupilSize, pupilSize)
-          ctx.fillRect(p.size * 0.25 - eyeSize + eyeSize * 0.25, -p.size * 0.2 + eyeSize * 0.25, pupilSize, pupilSize)
+          const pupilSize = eyeSize * 0.6
+          ctx.fillRect(-p.size * 0.3 + eyeSize * 0.2, eyeY + eyeSize * 0.2, pupilSize, pupilSize)
+          ctx.fillRect(p.size * 0.3 - eyeSize + eyeSize * 0.2, eyeY + eyeSize * 0.2, pupilSize, pupilSize)
 
-          // Sonrisa
+          // Sonrisa más visible
           ctx.strokeStyle = '#000000'
-          ctx.lineWidth = 2
+          ctx.lineWidth = Math.max(3, p.size * 0.05)
           ctx.beginPath()
-          ctx.arc(0, p.size * 0.1, p.size * 0.2, 0, Math.PI)
+          ctx.arc(0, p.size * 0.15, p.size * 0.25, 0, Math.PI)
           ctx.stroke()
 
           ctx.restore()
@@ -150,18 +186,22 @@ export default function InvitacionRobloxCumpleanosPage() {
         })
       )
 
-      animationFrameRef.current = requestAnimationFrame(animate)
+      animationId = requestAnimationFrame(animate)
+      animationFrameRef.current = animationId
     }
 
     animate()
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current)
       }
     }
-  }, [juegoActivo, personajes.length])
+  }, [juegoActivo, personajes])
 
   // Animación de partículas
   useEffect(() => {
@@ -253,19 +293,26 @@ export default function InvitacionRobloxCumpleanosPage() {
 
   // Generar nuevos personajes cuando se eliminan
   useEffect(() => {
-    if (personajes.length < (edadSeleccionada === 7 ? 10 : 7) && juegoActivo) {
-      const nuevoPersonaje: RobloxCharacter = {
-        id: Date.now(),
-        x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-        y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        color: coloresRoblox[Math.floor(Math.random() * coloresRoblox.length)],
-        size: 30 + Math.random() * 40,
-        rotation: Math.random() * 360,
-        rotationSpeed: (Math.random() - 0.5) * 5,
-      }
-      setPersonajes((prev) => [...prev, nuevoPersonaje])
+    if (!juegoActivo || !edadSeleccionada) return
+
+    const minPersonajes = edadSeleccionada === 7 ? 15 : 12
+    if (personajes.length < minPersonajes) {
+      const timer = setTimeout(() => {
+        const nuevoPersonaje: RobloxCharacter = {
+          id: Date.now() + Math.random(),
+          x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
+          y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3,
+          color: coloresRoblox[Math.floor(Math.random() * coloresRoblox.length)],
+          size: 60 + Math.random() * 60,
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 8,
+        }
+        setPersonajes((prev) => [...prev, nuevoPersonaje])
+      }, 500)
+
+      return () => clearTimeout(timer)
     }
   }, [personajes.length, juegoActivo, edadSeleccionada])
 
@@ -321,6 +368,12 @@ export default function InvitacionRobloxCumpleanosPage() {
           ref={canvasRef}
           onClick={handleCanvasClick}
           className="absolute inset-0 z-10 cursor-pointer"
+          style={{ 
+            width: '100%', 
+            height: '100%',
+            minHeight: '100vh',
+            display: 'block'
+          }}
         />
       )}
 
@@ -442,10 +495,20 @@ export default function InvitacionRobloxCumpleanosPage() {
               <h3 className="text-2xl font-bold text-white mb-2">
                 🎯 Instrucciones del Juego
               </h3>
-              <p className="text-lg text-white/90">
+              <p className="text-lg text-white/90 mb-2">
                 Haz clic en los personajes Roblox que aparecen en pantalla para ganar puntos.
                 ¡Mientras más personajes captures, más puntos obtienes!
               </p>
+              {personajes.length === 0 && (
+                <p className="text-yellow-300 font-bold text-xl mt-4 animate-pulse">
+                  ⏳ Cargando personajes...
+                </p>
+              )}
+              {personajes.length > 0 && (
+                <p className="text-green-300 font-semibold mt-2">
+                  ✨ {personajes.length} personajes en pantalla
+                </p>
+              )}
             </div>
           </section>
         )}
