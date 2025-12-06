@@ -308,6 +308,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=800&q=80',
     preview: '/disenos/pollos-las-ranitas',
   },
+  {
+    id: 'invitacion-roblox-cumpleanos',
+    nombre: 'Invitación Roblox Cumpleaños',
+    descripcion: 'Invitación web disruptiva con tema Roblox para cumpleaños. Incluye selector de edad (7 años y 65+), mini-juego interactivo con personajes estilo Roblox (bloques cuadrados con caras) que se mueven y rotan, sistema de puntos al hacer clic en personajes, partículas de colores al capturar personajes, información del evento (fecha, hora, lugar, tema), diseño con colores vibrantes de Roblox (azul, verde, rojo, amarillo, púrpura), efectos visuales animados, personajes que rebotan en los bordes, y experiencia gamificada única para ambas edades.',
+    caracteristicas: ['Interactivo', 'Roblox', 'Gaming', 'Gamificado'],
+    color: 'from-blue-500 to-purple-600',
+    imagen: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
+    preview: '/disenos/invitacion-roblox-cumpleanos',
+  },
 ]
 
 export default function DiseñosPage() {
