@@ -317,6 +317,15 @@ const diseños = [
     imagen: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
     preview: '/disenos/invitacion-roblox-cumpleanos',
   },
+  {
+    id: 'tablero-ouija-stranger-things',
+    nombre: 'Tablero Ouija Stranger Things',
+    descripcion: 'Landing page disruptiva inspirada en Stranger Things con tablero Ouija interactivo. Incluye alfabeto completo que se ilumina al interactuar, luces navideñas parpadeantes con efectos de brillo, planchette que se mueve con el mouse, mensajes misteriosos que aparecen del "más allá", partículas animadas al iluminar letras, ambiente oscuro con textura de pared vintage, efectos visuales de resplandor y sombras, sistema de mensajes interactivo donde puedes formar palabras o recibir mensajes automáticos, y experiencia inmersiva tipo Stranger Things.',
+    caracteristicas: ['Stranger Things', 'Interactivo', 'Misterioso', 'Inmersivo'],
+    color: 'from-gray-800 to-red-900',
+    imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&q=80',
+    preview: '/disenos/tablero-ouija-stranger-things',
+  },
 ]
 
 export default function DiseñosPage() {
