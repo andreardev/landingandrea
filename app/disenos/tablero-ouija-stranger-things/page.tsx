@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { MessageSquare, Sparkles, Zap, Eye, Ghost } from 'lucide-react'
 
 interface Letter {
@@ -43,9 +43,9 @@ export default function TableroOuijaStrangerThingsPage() {
   const particulasRef = useRef<HTMLCanvasElement>(null)
   const animationFrameRef = useRef<number>()
 
-  const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-  const coloresLuces = ['#ff0000', '#ff0080', '#ffaa00', '#ffff00', '#00ff00', '#00ffff', '#0080ff', '#8000ff']
-  const mensajesMisteriosos = [
+  const alfabeto = useMemo(() => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), [])
+  const coloresLuces = useMemo(() => ['#ff0000', '#ff0080', '#ffaa00', '#ffff00', '#00ff00', '#00ffff', '#0080ff', '#8000ff'], [])
+  const mensajesMisteriosos = useMemo(() => [
     'HELLO',
     'YES',
     'NO',
@@ -56,7 +56,7 @@ export default function TableroOuijaStrangerThingsPage() {
     'RUN',
     'TRUST',
     'BELIEVE',
-  ]
+  ], [])
 
   // Inicializar letras del alfabeto
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function TableroOuijaStrangerThingsPage() {
     })
 
     setLetras(nuevasLetras)
-  }, [])
+  }, [alfabeto])
 
   // Inicializar luces navideñas
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function TableroOuijaStrangerThingsPage() {
       })
     }
     setLuces(nuevasLuces)
-  }, [])
+  }, [coloresLuces])
 
   // Animar luces parpadeantes
   useEffect(() => {
@@ -487,7 +487,7 @@ export default function TableroOuijaStrangerThingsPage() {
                 <li>• Mueve el mouse sobre el tablero para mover la planchette</li>
                 <li>• Haz clic en las letras o pasa sobre ellas para iluminarlas</li>
                 <li>• Las letras iluminadas forman tu mensaje</li>
-                <li>• Presiona "Nuevo Mensaje" para recibir un mensaje misterioso</li>
+                <li>• Presiona &quot;Nuevo Mensaje&quot; para recibir un mensaje misterioso</li>
               </ul>
             </div>
           </div>
